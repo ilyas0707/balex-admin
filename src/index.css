@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
+* {
+	font-family: 'Rubik', sans-serif;
+    user-select: none;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, ul, p {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+input {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
+
+textarea {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
