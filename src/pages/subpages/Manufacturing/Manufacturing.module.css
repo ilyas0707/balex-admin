@@ -1,0 +1,48 @@
+.heading {
+    font-size: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.heading > a {
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: flex-end;
+}
+
+.create {
+    color: #304269;
+}
+
+.item {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #304269;
+}
+
+.item.edit {
+    border-bottom: 2px solid #F26101;
+}
+
+.item.edit > .main {
+    font-weight: bold;
+}
+
+.item.done {
+    color: #00ff00;
+}
+
+.main {
+    padding: 0 0 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hidden {
+    color: #fff;
+}

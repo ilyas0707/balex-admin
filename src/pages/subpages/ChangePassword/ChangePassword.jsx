@@ -11,7 +11,8 @@ import { AuthContext } from '../../../context/AuthContext'
 
 export const ChangePassword = () => {
     toast.configure({
-        autoClose: 3000,
+        position: "top-center",
+        autoClose: 2000,
         draggable: true
     })
 

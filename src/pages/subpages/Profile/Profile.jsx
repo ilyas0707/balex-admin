@@ -1,10 +1,11 @@
 import React from 'react'
-import { useAuth } from '../../../hooks/auth.hook'
 import Styles from './Profile.module.css'
+
+import { useAuth } from '../../../hooks/auth.hook'
+import { NavLink } from 'react-router-dom'
 
 import Man from './../../../assets/icons/man.png'
 import Woman from './../../../assets/icons/woman.png'
-import { NavLink } from 'react-router-dom'
 
 export const Profile = () => {
     const { profile } = useAuth()

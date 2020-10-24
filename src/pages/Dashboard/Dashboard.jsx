@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import Styles from './Dashboard.module.css'
+
 import { NavLink } from 'react-router-dom'
 import { Topline } from '../../components/Topline/Topline'
 import { Scene } from '../../components/Scene/Scene'
-import Styles from './Dashboard.module.css'
 
 export const Dashboard = () => {
     const [open, setOpen] = useState(false)
@@ -19,6 +20,7 @@ export const Dashboard = () => {
 
     const links = [
         { title: 'Приход камня', link: 'income', icon: 'move_to_inbox' },
+        { title: 'Обработка камня', link: 'manufacturing', icon: 'construction' },
         { title: 'Реализация камня', link: 'realization', icon: 'assignment_turned_in' },
         { title: 'Отчёт', link: 'analytics', icon: 'assessment' },
     ]
