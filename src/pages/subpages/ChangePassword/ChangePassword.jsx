@@ -33,7 +33,7 @@ export const ChangePassword = () => {
         if (password.password !== '' && form.newPassword !== '') {
             if (password.password === form.newPassword) {
                 try {
-                    const data = await request(`${API_URL}/user/changePassword`, "POST", {...form}, {
+                    const data = await request(`${API_URL}/api/login/changePassword`, "POST", {...form}, {
                         Authorization: `Basic ${code.hashed}`
                     })
                     successMessage(data.message)
