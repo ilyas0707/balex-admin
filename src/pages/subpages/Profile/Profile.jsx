@@ -41,13 +41,13 @@ export const Profile = () => {
                     </div>
                 </div>
                 <div className={Styles.buttons}>
-                    { 
+                    {/* { 
                         admin.length > 1 ? 
                         <NavLink activeClassName={Styles.active} to={`/panel/create`}>
                             <i className={`material-icons ${Styles.icon}`}>create</i>
                             <span className={Styles.text}>Создать</span>
                         </NavLink> : ''
-                    }
+                    } */}
                     <NavLink activeClassName={Styles.active} to={`/panel/changePassword`}>
                         <i className={`material-icons ${Styles.key}`}>vpn_key</i>
                         <span className={Styles.text}>Изменить пароль</span>

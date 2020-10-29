@@ -1,11 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { Export } from '../../../components/Export/Export'
+import { useTest } from '../../../hooks/test.hook'
 import Styles from './Realization.module.css'
 
 export const Realization = () => {
-    const test = [
-        { status: 1, usage: 'Каменные плиты', volume: 3500 },
-    ]
+    const { manufacturing, realization } = useTest()
+    const total = []
+    const toExcel = total.concat({'#': 'Выработка'}, manufacturing, {'#': 'Реализация'}, realization)
 
     return (
         <div className={Styles.realization}>
@@ -15,36 +17,51 @@ export const Realization = () => {
                     <i className={`material-icons ${Styles.create}`}>library_add</i>
                 </NavLink>
             </h3>
-            <div className={`${Styles.item} ${Styles.edit}`}>
-                <span className={Styles.status}><i className={`material-icons ${Styles.hidden}`}>done</i></span>
-                <p className={Styles.main}>
-                    <span>Использовано</span>
-                    <span>Объём</span>
-                </p>
-            </div>
             <div className={Styles.block}>
-                {
-                    test.map(({status, usage, volume}, i) => {
-                        return (
-                            <div key={ i } className={`${Styles.item} ${status === 1 ? Styles.done : ''}`}>
-                                <span className={Styles.status}>
-                                    {
-                                        status === 0 ?
-                                        <i className={`material-icons ${Styles.icon}`}>cached</i> :
-                                        status === 1 ?
-                                        <i className={`material-icons ${Styles.icon}`}>done</i> :
-                                        ""
-                                    }
-                                </span>
-                                <p className={Styles.main}>
-                                    <span>{ usage }</span>
-                                    <span>{ `${volume}m3` }</span>
-                                </p>
-                            </div>
-                        )
-                    })
-                }
+                <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                    <caption>Реализация</caption>
+                    <thead>
+                        <tr><th>Слой</th><th>Размер</th><th>Объём</th><th>Клиент</th><th>Цена(m2)</th><th>Итого</th><th>Дата</th></tr>
+                    </thead>
+                    <tbody>
+                        {
+                            realization.map(({ layer, size, volume, client, price, date }, i) => {
+                                return (
+                                    <tr key={ i }>
+                                        <td>{ layer }</td>
+                                        <td>{ size }</td>
+                                        <td>{ volume }</td>
+                                        <td>{ client }</td>
+                                        <td>{ price }</td>
+                                        <td>{ volume * price }</td>
+                                        <td width="1%">{ `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}` }</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+                <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                    <caption>Выработка</caption>
+                    <thead>
+                        <tr><th>Слои</th><th>Размер</th><th>Объём</th></tr>
+                    </thead>
+                    <tbody>
+                        {
+                            manufacturing.map(({ layer, size, volume }, i) => {
+                                return (
+                                    <tr key={ i }>
+                                        <td>{ layer }</td>
+                                        <td>{ size }</td>
+                                        <td>{ volume }</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
+            <Export tableData={toExcel} fileName="realization" />
         </div>
     )
 }

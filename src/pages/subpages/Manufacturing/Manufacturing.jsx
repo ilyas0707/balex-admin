@@ -1,23 +1,15 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { Export } from '../../../components/Export/Export'
+import { useSort } from '../../../hooks/sort.hook'
+import { useTest } from '../../../hooks/test.hook'
 import Styles from './Manufacturing.module.css'
 
 export const Manufacturing = () => {
-    const test = [
-        { status: 1, usage: 'Каменные плиты', volume: 3500 },
-        { status: 0, usage: 'Каменные плиты', volume: 3500 },
-        { status: 0, usage: 'Каменные плиты', volume: 3500 },
-    ]
-
-    function sortByStatus(a, b) {
-        if (a.status > b.status) {
-            return 1
-        } else if (a.status < b.status) {
-            return -1
-        } else {
-            return 0
-        }
-    }
+    const { sortByStatus } = useSort()
+    const { manufacturing, outcome, leftover } = useTest()
+    const total = []
+    const toExcel = total.concat({'#': 'Расходы'}, outcome, {'#': 'Выработка'}, manufacturing, {'#': 'Остаток'}, leftover)
 
     return (
         <div className={Styles.manufacturing}>
@@ -27,36 +19,64 @@ export const Manufacturing = () => {
                     <i className={`material-icons ${Styles.create}`}>library_add</i>
                 </NavLink>
             </h3>
-            <div className={`${Styles.item} ${Styles.edit}`}>
-                <span className={Styles.status}><i className={`material-icons ${Styles.hidden}`}>done</i></span>
-                <p className={Styles.main}>
-                    <span>Использовано</span>
-                    <span>Объём</span>
-                </p>
-            </div>
             <div className={Styles.block}>
-                {
-                    test.sort(sortByStatus).map(({status, usage, volume}, i) => {
-                        return (
-                            <div key={ i } className={`${Styles.item} ${status === 1 ? Styles.done : ''}`}>
-                                <span className={Styles.status}>
-                                    {
-                                        status === 0 ?
-                                        <i className={`material-icons ${Styles.icon}`}>cached</i> :
-                                        status === 1 ?
-                                        <i className={`material-icons ${Styles.icon}`}>done</i> :
-                                        ""
-                                    }
-                                </span>
-                                <p className={Styles.main}>
-                                    <span>{ usage }</span>
-                                    <span>{ `${volume}m3` }</span>
-                                </p>
-                            </div>
-                        )
-                    })
-                }
+                <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                    <caption>Расходы</caption>
+                    <thead>
+                        <tr><th>Станок</th><th>Объём</th><th>Дата</th></tr>
+                    </thead>
+                    <tbody>
+                        {
+                            outcome.map(({ machine, volume, date }, i) => {
+                                return (
+                                    <tr key={ i }>
+                                        <td>{ machine }</td>
+                                        <td>{ volume }</td>
+                                        <td width="1%">{ `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}` }</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+                <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                    <caption>Выработка</caption>
+                    <thead>
+                        <tr><th>Слой</th><th>Размер</th><th>Объём</th></tr>
+                    </thead>
+                    <tbody>
+                        {
+                            manufacturing.map(({ layer, size, volume }, i) => {
+                                return (
+                                    <tr key={ i }>
+                                        <td>{ layer }</td>
+                                        <td>{ size }</td>
+                                        <td>{ volume }</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+                <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                    <caption>Остаток</caption>
+                    <thead>
+                        <tr><th>Объём</th></tr>
+                    </thead>
+                    <tbody>
+                        {
+                            leftover.map(({ volume }, i) => {
+                                return (
+                                    <tr key={ i }>
+                                        <td>{ volume }</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
+            <Export tableData={toExcel} fileName="manufacturing" />
         </div>
     )
 }

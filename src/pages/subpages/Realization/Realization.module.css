@@ -15,34 +15,17 @@
     color: #304269;
 }
 
-.item {
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #304269;
-}
-
-.item.edit {
-    border-bottom: 2px solid #F26101;
-}
-
-.item.edit > .main {
-    font-weight: bold;
-}
-
-.item.done {
-    color: #00ff00;
-}
-
-.main {
-    padding: 0 0 0 20px;
+.table {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    margin-bottom: 30px;
+    border-collapse: collapse;
 }
 
-.hidden {
-    color: #fff;
+.table > caption {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.date {
+    display: inline-block;
 }

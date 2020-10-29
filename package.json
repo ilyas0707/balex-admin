@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "file-saver": "^2.0.2",
     "fuse.js": "^6.4.2",
     "path": "^0.12.7",
     "react": "^16.14.0",
@@ -15,7 +16,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-toastify": "^6.0.9",
-    "recharts": "^1.8.5"
+    "recharts": "^1.8.5",
+    "xlsx": "^0.16.8"
   },
   "scripts": {
     "start": "node server.js",
