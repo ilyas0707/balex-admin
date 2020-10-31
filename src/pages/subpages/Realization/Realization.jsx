@@ -1,13 +1,30 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Export } from '../../../components/Export/Export'
-import { useTest } from '../../../hooks/test.hook'
+import { useGet } from '../../../hooks/get.hook'
+import { useRealization } from '../../../hooks/realization.hook'
 import Styles from './Realization.module.css'
 
 export const Realization = () => {
-    const { manufacturing, realization } = useTest()
+    const { data, loading } = useGet('/api/realization/getAllSections')
+    console.log(data);
+    const { realizationData, remainderData } = useRealization(data.realization, data.remainder)
     const total = []
-    const toExcel = total.concat({'#': 'Выработка'}, manufacturing, {'#': 'Реализация'}, realization)
+    const toExcel = total.concat({'#': 'Реализация'}, realizationData, {'#': 'Остаток'}, remainderData)
+
+    if (loading) {
+        return (
+            <>
+                <h3 className={Styles.heading}>
+                    Реализация
+                    <NavLink activeClassName={Styles.active} to={`/panel/realization/create`}>
+                        <i className={`material-icons ${Styles.create}`}>library_add</i>
+                    </NavLink>
+                </h3>
+                <div className={Styles.loading}></div>
+            </>
+        )
+    }
 
     return (
         <div className={Styles.realization}>
@@ -18,48 +35,53 @@ export const Realization = () => {
                 </NavLink>
             </h3>
             <div className={Styles.block}>
-                <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
-                    <caption>Реализация</caption>
-                    <thead>
-                        <tr><th>Слой</th><th>Размер</th><th>Объём</th><th>Клиент</th><th>Цена(m2)</th><th>Итого</th><th>Дата</th></tr>
-                    </thead>
-                    <tbody>
-                        {
-                            realization.map(({ layer, size, volume, client, price, date }, i) => {
-                                return (
-                                    <tr key={ i }>
-                                        <td>{ layer }</td>
-                                        <td>{ size }</td>
-                                        <td>{ volume }</td>
-                                        <td>{ client }</td>
-                                        <td>{ price }</td>
-                                        <td>{ volume * price }</td>
-                                        <td width="1%">{ `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}` }</td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
-                <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
-                    <caption>Выработка</caption>
-                    <thead>
-                        <tr><th>Слои</th><th>Размер</th><th>Объём</th></tr>
-                    </thead>
-                    <tbody>
-                        {
-                            manufacturing.map(({ layer, size, volume }, i) => {
-                                return (
-                                    <tr key={ i }>
-                                        <td>{ layer }</td>
-                                        <td>{ size }</td>
-                                        <td>{ volume }</td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+                <div className={Styles.wrapper}>
+                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                        <caption>Реализация</caption>
+                        <thead>
+                            <tr><th>Клиент</th><th>Слой</th><th>Размеры</th><th>Площадь</th><th>Цена(m2)</th><th>Итого</th><th>Дата</th></tr>
+                        </thead>
+                        <tbody>
+                            {
+                                realizationData ?
+                                realizationData.map(({ clientName, layer, dimension, square, pricePerSquare, total, date }, i) => {
+                                    return (
+                                        <tr key={ i }>
+                                            <td>{ clientName }</td>
+                                            <td>{ layer }</td>
+                                            <td>{ dimension }</td>
+                                            <td>{ square }</td>
+                                            <td>{ pricePerSquare }</td>
+                                            <td>{ total }</td>
+                                            <td width="1%">{ date }</td>
+                                        </tr>
+                                    )
+                                }) : null
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div className={Styles.wrapper}>
+                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                        <caption>Остаток</caption>
+                        <thead>
+                            <tr><th>Слой</th><th>Объём</th></tr>
+                        </thead>
+                        <tbody>
+                            {
+                                remainderData ?
+                                remainderData.map(({ layer, volume }, i) => {
+                                    return (
+                                        <tr key={ i }>
+                                            <td>{ layer }</td>
+                                            <td>{ volume }</td>
+                                        </tr>
+                                    )
+                                }) : null
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <Export tableData={toExcel} fileName="realization" />
         </div>

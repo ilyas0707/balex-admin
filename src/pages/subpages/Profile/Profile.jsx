@@ -41,14 +41,14 @@ export const Profile = () => {
                     </div>
                 </div>
                 <div className={Styles.buttons}>
-                    {/* { 
+                    { 
                         admin.length > 1 ? 
-                        <NavLink activeClassName={Styles.active} to={`/panel/create`}>
-                            <i className={`material-icons ${Styles.icon}`}>create</i>
+                        <NavLink activeClassName={Styles.active} to={`/panel/profile/createUser`}>
+                            <i className={`material-icons ${Styles.key}`}>create</i>
                             <span className={Styles.text}>Создать</span>
                         </NavLink> : ''
-                    } */}
-                    <NavLink activeClassName={Styles.active} to={`/panel/changePassword`}>
+                    }
+                    <NavLink activeClassName={Styles.active} to={`/panel/profile/changePassword`}>
                         <i className={`material-icons ${Styles.key}`}>vpn_key</i>
                         <span className={Styles.text}>Изменить пароль</span>
                     </NavLink>

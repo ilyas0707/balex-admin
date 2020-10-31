@@ -20,6 +20,7 @@ export const Dashboard = () => {
 
     const links = [
         { title: 'Приход камня', link: 'income', icon: 'move_to_inbox' },
+        { title: 'Приход камня(Бухгалтер)', link: 'incomeAccounting', icon: 'all_inbox' },
         { title: 'Обработка камня', link: 'manufacturing', icon: 'construction' },
         { title: 'Реализация камня', link: 'realization', icon: 'assignment_turned_in' },
         { title: 'Отчёт', link: 'analytics', icon: 'assessment' },

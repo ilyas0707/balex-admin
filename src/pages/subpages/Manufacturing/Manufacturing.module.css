@@ -1,7 +1,25 @@
+@keyframes loading {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading {
+    display: inline-block;
+    border: 10px solid #ccc;
+    border-top: 10px solid #F26101;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: loading .5s linear infinite;
+    cursor: default;
+}
+
+
 .heading {
     font-size: 30px;
     margin-bottom: 30px;
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
@@ -15,13 +33,18 @@
     color: #304269;
 }
 
+.wrapper {
+    overflow-x: scroll;
+    margin-bottom: 30px;
+}
+
 .table {
     width: 100%;
-    margin-bottom: 30px;
     border-collapse: collapse;
 }
 
 .table > caption {
+    text-align: left;
     font-size: 24px;
     margin-bottom: 30px;
 }

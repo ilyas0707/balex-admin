@@ -14,6 +14,8 @@ export const Export = ({tableData, fileName}) => {
         FileSaver.saveAs(data, fileName + fileExtension);
     }
     return (
-        <button className={Styles.button} onClick={(e) => exportToExcel(tableData,fileName)}>Экспортировать</button>
+        <button className={Styles.button} onClick={(e) => exportToExcel(tableData,fileName)}>
+            <i className={`material-icons ${Styles.icon}`}>get_app</i>
+        </button>
     )
 }

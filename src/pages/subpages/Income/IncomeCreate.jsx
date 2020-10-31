@@ -1,47 +1,91 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useGet } from '../../../hooks/get.hook'
 import Styles from './IncomeCreate.module.css'
 
 import { Form } from './../../../components/Form/Form'
 
 export const IncomeCreate = () => {
-    const Role1 = [
+    const [opened, setOpened] = useState(0)
+    const { data, loading } = useGet('/admin/stoneMachine/getAll')
+
+    const Income = [
+        { type: "number", name: "layer", label: "Слой"},
         { type: "number", name: "volume", label: "Объём(m3)"},
-        { type: "number", name: "layers", label: "Слои"},
-    ]
-
-    const Role2 = [
         { type: "text", name: "carNumber", label: "Гос. номер"},
-        { type: "text", name: "driver", label: "ФИО"},
-        { type: "number", name: "invoice", label: "Накладная"},
-        { type: "number", name: "cash", label: "Стоимость"},
+        { type: "text", name: "driverName", label: "ФИО"},
+        { type: "number", name: "billNumber", label: "Накладная"},
+        { type: "number", name: "pricePerCube", label: "Цена(m3)"},
     ]
 
-    const User = [Role1, Role2]
+    const Machine = [
+        { type: "text", name: "name", label: "Станок"},
+    ]
+
+    const Outcome = [
+        { type: "number", name: "layer", label: "Слой"},
+        { type: "number", name: "stoneVolume", label: "Объём(m3)"},
+    ]
 
     const select = [
-        // { name: "gender", options: [
-        //     { label: 'Пол', id: 'undefined' }, 
-        //     { label: 'Мужской', id: 'male' }, 
-        //     { label: 'Женский', id: 'female' } 
-        // ] },
-        // { name: "level", options: [
-        //     { label: 'Статус', id: 0 }, 
-        //     { label: 'Ученик', id: 1 }, 
-        //     { label: 'Младший ментор', id: 2 }, 
-        //     { label: 'Старший ментор', id: 3 }, 
-        //     { label: 'Администратор', id: 4 }
-        // ] },
-        // { name: "courseId", options: [
-        //     { label: 'Курс', id: 0 }, 
-        //     { label: 'JavaScript', id: 'JavaScript' }, 
-        //     { label: 'Java', id: 'Java' }, 
-        //     { label: 'Python', id: 'Python' }
-        // ] },
+        { name: "stoneMachine", options: [
+            [{ label: 'Станок', id: 'undefined' }], 
+            data.object ?
+            data.object.map((element) => {
+                return { label: element.name, id: element.name }
+            }) : ''
+        ] },
     ]
+
+    const openTab = (id) => {
+        setOpened(id)
+    }
+
+    const links = [
+        { name: 'Приход' }, { name: 'Станок' }, { name: 'Расход' }
+    ]
+
+    const tabs = [
+        { data: Income, url: 'api/stoneIncome/createForVolume' },
+        { data: Machine, url: 'admin/stoneMachine/create' },
+        { id: 'outcome', data: Outcome, url: 'admin/stoneOutcome/create', select: select, machines: data.object },
+    ]
+
+    if (loading) {
+        return (
+            <>
+                <h3 className={Styles.heading}>Создать</h3>
+                <div className={Styles.loading}></div>
+            </>
+        )
+    }
 
     return (
         <div className={Styles.create}>
-            <Form data={ User } select={ select } />
+            <h2 className={Styles.heading}>Создать</h2>
+            <div className={Styles.tabs}>
+                {
+                    links.map(({name}, i) => {
+                        return (
+                            <a
+                                key={ i }
+                                href="/"
+                                className={`${Styles.tab} ${opened === i ? Styles.active : ''}`}
+                                onClick={e => {e.preventDefault(); openTab(i)}}>
+                                { name }
+                            </a>
+                        )
+                    })
+                }
+            </div>
+            {
+                tabs.map(({id, data, url, select, machines}, i) => {
+                    return (
+                        <div key={ i } className={`${Styles.form} ${opened === i ? Styles.active : ''}`}>
+                            <Form component={ 'income' } id={ id } data={ data } url={ url } select={ select } machines={machines} />
+                        </div>
+                    )
+                })
+            }
         </div>
     )
 }

@@ -3,12 +3,15 @@ import { Route, Switch } from 'react-router-dom'
 
 import { Income } from '../../pages/subpages/Income/Income'
 import { IncomeCreate } from '../../pages/subpages/Income/IncomeCreate'
+import { IncomeAccounting } from '../../pages/subpages/IncomeAccounting/IncomeAccounting'
+import { IncomeAccountingCreate } from '../../pages/subpages/IncomeAccounting/IncomeAccountingCreate'
 import { Manufacturing } from '../../pages/subpages/Manufacturing/Manufacturing'
 import { ManufacturingCreate } from '../../pages/subpages/Manufacturing/ManufacturingCreate'
 import { Realization } from '../../pages/subpages/Realization/Realization'
 import { RealizationCreate } from '../../pages/subpages/Realization/RealizationCreate'
 import { Analytics } from '../../pages/subpages/Analytics/Analytics'
 import { Profile } from './../../pages/subpages/Profile/Profile'
+import { CreateUser } from '../../pages/subpages/CreateUser/CreateUser'
 import { ChangePassword } from '../../pages/subpages/ChangePassword/ChangePassword'
 
 import Styles from './Scene.module.css'
@@ -22,6 +25,12 @@ export const Scene = () => {
                 </Route>
                 <Route path="/panel/income/create" exact>
                     <IncomeCreate />
+                </Route>
+                <Route path="/panel/incomeAccounting" exact>
+                    <IncomeAccounting />
+                </Route>
+                <Route path="/panel/incomeAccounting/create" exact>
+                    <IncomeAccountingCreate />
                 </Route>
                 <Route path="/panel/manufacturing" exact>
                     <Manufacturing />
@@ -41,7 +50,10 @@ export const Scene = () => {
                 <Route path="/panel/profile" exact>
                     <Profile />
                 </Route>
-                <Route path="/panel/changePassword" exact>
+                <Route path="/panel/profile/createUser" exact>
+                    <CreateUser />
+                </Route>
+                <Route path="/panel/profile/changePassword" exact>
                     <ChangePassword />
                 </Route>
             </Switch>

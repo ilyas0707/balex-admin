@@ -5,8 +5,9 @@
 
 .loading {
     display: inline-block;
+    margin-top: 30px;
     border: 10px solid #ccc;
-    border-top: 10px solid #F26101;
+    border-top: 10px solid #641885;
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -14,11 +15,11 @@
     cursor: default;
 }
 
-
-
 .heading {
-    margin-bottom: 30px;
     font-size: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
 }
 
 .form {
@@ -32,7 +33,7 @@
 
 .tabs {
     display: flex;
-    background: #304269;
+    background: #641885;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
@@ -49,7 +50,7 @@
 
 .tab.active {
     color: #fff;
-    border-bottom: 5px solid #F26101;
+    border-bottom: 5px solid yellow;
 }
 
 @media screen and (max-width: 430px) {

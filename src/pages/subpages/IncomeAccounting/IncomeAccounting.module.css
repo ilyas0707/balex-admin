@@ -51,3 +51,7 @@
 .date {
     display: inline-block;
 }
+
+.paid {
+    background: greenyellow;
+}
