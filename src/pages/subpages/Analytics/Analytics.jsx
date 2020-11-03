@@ -1,62 +1,106 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
+import { Export } from '../../../components/Export/Export';
+import { useAnalytics } from '../../../hooks/analytics.hook';
+import { useGet } from '../../../hooks/get.hook';
 import Styles from './Analytics.module.css'
 
-import { BarChart, Bar, LineChart, ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-
 export const Analytics = () => {
-    const line = [
-        { name: 'Янв.', 'Приход': 4000, 'Реализация': 2400 },
-        { name: 'Фев.', 'Приход': 3000, 'Реализация': 1398 },
-        { name: 'Март', 'Приход': 2000, 'Реализация': 9800 },
-        { name: 'Апр.', 'Приход': 2780, 'Реализация': 3908 },
-        { name: 'Май', 'Приход': 1890, 'Реализация': 4800 },
-        { name: 'Июнь', 'Приход': 2390, 'Реализация': 3800 },
-        { name: 'Июль', 'Приход': 3490, 'Реализация': 4300 },
-        { name: 'Авг.', 'Приход': 1100, 'Реализация': 1500 },
-        { name: 'Сент.', 'Приход': 3400, 'Реализация': 2200 },
-        { name: 'Окт.', 'Приход': 2560, 'Реализация': 3700 },
-        { name: 'Нояб.', 'Приход': 1400, 'Реализация': 1900 },
-        { name: 'Дек.', 'Приход': 3600, 'Реализация': 2450 },
-    ]
+    const { data, loading, admin } = useGet('/admin/finance/getThisMonthSections')
+    const { incomeData, expensesData } = useAnalytics(data.income, data.expense)
+    const total = []
+    const toExcel = total.concat({'#': 'Приходящие транзакции'}, incomeData, {'#': 'Уходящие транзакции'}, expensesData)
 
+    if (loading) {
+        return (
+            <>
+                {
+                    admin ?
+                    admin.length === 1 ?
+                    '' :
+                    <h3 className={Styles.heading}>
+                        Финансы
+                        {
+                            admin ?
+                            admin.length > 1 ? 
+                            <NavLink activeClassName={Styles.active} to={`/panel/analytics/create`}>
+                                <i className={`material-icons ${Styles.create}`}>library_add</i>
+                            </NavLink> : '' : ''
+                        }
+                    </h3> : ''
+                }
+                <div className={Styles.loading}></div>
+            </>
+        )
+    }
+    if (admin) {
+        if (admin.length === 1) {
+            return (
+                <div className={Styles.warning}><i className={`material-icons ${Styles.icon}`}>error</i></div>
+            )
+        }
+    }
     return (
         <div className={Styles.block}>
-            <div className={Styles.item}>
-                <ResponsiveContainer>
-                    <LineChart
-                        data={line}
-                        margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="Реализация" stroke="#304269" />
-                        <Line type="monotone" dataKey="Приход" stroke="#F26101" activeDot={{ r: 8 }} />
-                    </LineChart>
-                </ResponsiveContainer>
+            <h3 className={Styles.heading}>
+                Финансы
+                {
+                    admin ?
+                    admin.length > 1 ? 
+                    <NavLink activeClassName={Styles.active} to={`/panel/analytics/create`}>
+                        <i className={`material-icons ${Styles.create}`}>library_add</i>
+                    </NavLink> : '' : ''
+                }
+            </h3>
+            <div className={Styles.block}>
+                <div className={Styles.wrapper}>
+                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                        <caption>Приходящие транзакции</caption>
+                        <thead>
+                            <tr><th>Категория</th><th>Описание</th><th>Сумма</th><th>Дата</th></tr>
+                        </thead>
+                        <tbody>
+                            {
+                                incomeData ?
+                                incomeData.map(({ category, description, value, date }, i) => {
+                                    return (
+                                        <tr key={ i }>
+                                            <td>{ category }</td>
+                                            <td>{ description }</td>
+                                            <td>{ value }</td>
+                                            <td width="1%">{ date }</td>
+                                        </tr>
+                                    )
+                                }) : null
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div className={Styles.wrapper}>
+                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                        <caption>Уходящие транзакции</caption>
+                        <thead>
+                            <tr><th>Категория</th><th>Описание</th><th>Сумма</th><th>Дата</th></tr>
+                        </thead>
+                        <tbody>
+                            {
+                                expensesData ?
+                                expensesData.map(({ category, description, value, date }, i) => {
+                                    return (
+                                        <tr key={ i }>
+                                            <td>{ category }</td>
+                                            <td>{ description }</td>
+                                            <td>{ value }</td>
+                                            <td width="1%">{ date }</td>
+                                        </tr>
+                                    )
+                                }) : null
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div className={Styles.item}>
-                <ResponsiveContainer>
-                    <BarChart
-                        data={line}
-                        margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="Реализация" fill="#304269" />
-                        <Bar dataKey="Приход" fill="#F26101" />
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
+            <Export tableData={toExcel} fileName="realization" />
         </div>
     )
 }

@@ -3,7 +3,8 @@ import { useAuth } from "./auth.hook"
 import { useHttp } from "./http.hook"
 
 export const useGet = (url) => {
-    const { code } = useAuth()
+    const { code, profile } = useAuth()
+    const admin = profile.userRole
     const { loading, request, API_URL } = useHttp()
     const [data, setData] = useState([])
 
@@ -21,5 +22,5 @@ export const useGet = (url) => {
         return () => mounted = false
     }, [request, API_URL, code, url])
 
-    return { data, loading }
+    return { data, loading, admin }
 }

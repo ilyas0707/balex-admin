@@ -6,7 +6,6 @@ import { Form } from './../../../components/Form/Form'
 
 export const IncomeAccountingCreate = () => {
     const { data, loading } = useGet('/api/stoneIncome/getAll')
-    console.log(data);
 
     const IncomeAccounting = [
         { type: "number", name: "pricePaid", label: "Оплачено"},

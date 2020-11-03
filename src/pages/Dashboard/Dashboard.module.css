@@ -1,3 +1,26 @@
+.center {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes loading {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading {
+    display: inline-block;
+    border: 10px solid #ccc;
+    border-top: 10px solid #F26101;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: loading .5s linear infinite;
+    cursor: default;
+}
+
 .dashboard {
     display: flex;
 }
@@ -144,6 +167,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.disabled {
+    cursor: default;
+    pointer-events: none;        
+    text-decoration: none;
+    color: grey;
 }
 
 @media screen and (max-width: 500px) {

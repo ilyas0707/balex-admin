@@ -10,6 +10,7 @@ import { ManufacturingCreate } from '../../pages/subpages/Manufacturing/Manufact
 import { Realization } from '../../pages/subpages/Realization/Realization'
 import { RealizationCreate } from '../../pages/subpages/Realization/RealizationCreate'
 import { Analytics } from '../../pages/subpages/Analytics/Analytics'
+import { AnalyticsCreate } from '../../pages/subpages/Analytics/AnalyticsCreate'
 import { Profile } from './../../pages/subpages/Profile/Profile'
 import { CreateUser } from '../../pages/subpages/CreateUser/CreateUser'
 import { ChangePassword } from '../../pages/subpages/ChangePassword/ChangePassword'
@@ -46,6 +47,9 @@ export const Scene = () => {
                 </Route>
                 <Route path="/panel/analytics" exact>
                     <Analytics />
+                </Route>
+                <Route path="/panel/analytics/create" exact>
+                    <AnalyticsCreate />
                 </Route>
                 <Route path="/panel/profile" exact>
                     <Profile />

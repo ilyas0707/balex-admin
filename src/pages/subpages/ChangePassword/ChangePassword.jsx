@@ -61,9 +61,6 @@ export const ChangePassword = () => {
             ...form, [e.target.name]: e.target.value
         })
     }
-
-    console.log(password);
-    console.log(form);
     
     return (
         <div className={Styles.form}>

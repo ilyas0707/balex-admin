@@ -7,8 +7,7 @@ import { useIncome } from '../../../hooks/income.hook'
 import Styles from './IncomeAccounting.module.css'
 
 export const IncomeAccounting = () => {
-    const { data, loading } = useGet('/api/stoneIncome/getAllSections')
-    console.log(data)
+    const { data, loading, admin } = useGet('/api/stoneIncome/getAllSections')
     const { sortByStatus } = useSort()
     const { incomeData } = useIncome(data.income)
     let total = []
@@ -17,15 +16,27 @@ export const IncomeAccounting = () => {
     if (loading) {
         return (
             <>
-                <h3 className={Styles.heading}>
-                    Приход <br/> (Бухгалтер)
-                    <NavLink activeClassName={Styles.active} to={`/panel/incomeAccounting/create`}>
-                        <i className={`material-icons ${Styles.create}`}>library_add</i>
-                    </NavLink>
-                </h3>
+                {
+                    admin ?
+                    admin.length === 1 ?
+                    '' :
+                    <h3 className={Styles.heading}>
+                        Приход <br/> (Бухгалтер)
+                        <NavLink activeClassName={Styles.active} to={`/panel/incomeAccounting/create`}>
+                            <i className={`material-icons ${Styles.create}`}>library_add</i>
+                        </NavLink>
+                    </h3> : ''
+                }
                 <div className={Styles.loading}></div>
             </>
         )
+    }
+    if (admin) {
+        if (admin.length === 1) {
+            return (
+                <div className={Styles.warning}><i className={`material-icons ${Styles.icon}`}>error</i></div>
+            )
+        }
     }
     return (
         <div className={Styles.income}>

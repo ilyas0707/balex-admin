@@ -28,6 +28,17 @@
     align-items: flex-end;
 }
 
+.warning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    font-size: 100px;
+    color: #304269;
+}
+
 .create {
     color: #304269;
 }

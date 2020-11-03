@@ -6,8 +6,7 @@ import { useRealization } from '../../../hooks/realization.hook'
 import Styles from './Realization.module.css'
 
 export const Realization = () => {
-    const { data, loading } = useGet('/api/realization/getAllSections')
-    console.log(data);
+    const { data, loading, admin } = useGet('/api/realization/getAllSections')
     const { realizationData, remainderData } = useRealization(data.realization, data.remainder)
     const total = []
     const toExcel = total.concat({'#': 'Реализация'}, realizationData, {'#': 'Остаток'}, remainderData)
@@ -17,9 +16,13 @@ export const Realization = () => {
             <>
                 <h3 className={Styles.heading}>
                     Реализация
-                    <NavLink activeClassName={Styles.active} to={`/panel/realization/create`}>
-                        <i className={`material-icons ${Styles.create}`}>library_add</i>
-                    </NavLink>
+                    {
+                        admin ?
+                        admin.length > 1 ? 
+                        <NavLink activeClassName={Styles.active} to={`/panel/realization/create`}>
+                            <i className={`material-icons ${Styles.create}`}>library_add</i>
+                        </NavLink> : '' : ''
+                    }
                 </h3>
                 <div className={Styles.loading}></div>
             </>
@@ -30,9 +33,13 @@ export const Realization = () => {
         <div className={Styles.realization}>
             <h3 className={Styles.heading}>
                 Реализация
-                <NavLink activeClassName={Styles.active} to={`/panel/realization/create`}>
-                    <i className={`material-icons ${Styles.create}`}>library_add</i>
-                </NavLink>
+                {
+                    admin ?
+                    admin.length > 1 ? 
+                    <NavLink activeClassName={Styles.active} to={`/panel/realization/create`}>
+                        <i className={`material-icons ${Styles.create}`}>library_add</i>
+                    </NavLink> : '' : ''
+                }
             </h3>
             <div className={Styles.block}>
                 <div className={Styles.wrapper}>

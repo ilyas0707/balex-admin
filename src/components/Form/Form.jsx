@@ -40,6 +40,8 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                 history.push('panel/manufacturing/create')
             } else if (component === 'realization') {
                 history.push('panel/realization/create')
+            } else if (component === 'analytics') {
+                history.push('panel/analytics/create')
             }
         } catch (e) {
             errorMessage("Поля не должны быть пустыми!")
@@ -72,14 +74,13 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                 e.target.name === 'pricePerCube' ||
                 e.target.name === 'square' ||
                 e.target.name === 'pricePerSquare' ||
-                e.target.name === 'age' ?
+                e.target.name === 'age' || 
+                e.target.name === 'value' ?
                 +e.target.value : e.target.value
             })
         }
     }
 
-    console.log(form);
-    
     return (
         <div className={Styles.form}>
             <div className={Styles.block}>

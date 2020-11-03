@@ -6,8 +6,7 @@ import { useManufacturing } from '../../../hooks/manufacturing.hook'
 import Styles from './Manufacturing.module.css'
 
 export const Manufacturing = () => {
-    const { data, loading } = useGet('/api/manufacturing/getAllSections')
-    console.log(data);
+    const { data, loading, admin } = useGet('/api/manufacturing/getAllSections')
     const { manufacturingData, remainderData } = useManufacturing(data.manufacturing, data.remainder)
     const total = []
     const toExcel = total.concat({'#': 'Выработка'}, manufacturingData, {'#': 'Остаток'}, remainderData)
@@ -17,9 +16,13 @@ export const Manufacturing = () => {
             <>
                 <h3 className={Styles.heading}>
                     Выработка
-                    <NavLink activeClassName={Styles.active} to={`/panel/manufacturing/create`}>
-                        <i className={`material-icons ${Styles.create}`}>library_add</i>
-                    </NavLink>
+                    {
+                        admin ?
+                        admin.length > 1 ? 
+                        <NavLink activeClassName={Styles.active} to={`/panel/manufacturing/create`}>
+                            <i className={`material-icons ${Styles.create}`}>library_add</i>
+                        </NavLink> : '' : ''
+                    }
                 </h3>
                 <div className={Styles.loading}></div>
             </>
@@ -30,9 +33,13 @@ export const Manufacturing = () => {
         <div className={Styles.manufacturing}>
             <h3 className={Styles.heading}>
                 Выработка
-                <NavLink activeClassName={Styles.active} to={`/panel/manufacturing/create`}>
-                    <i className={`material-icons ${Styles.create}`}>library_add</i>
-                </NavLink>
+                {
+                    admin ?
+                    admin.length > 1 ? 
+                    <NavLink activeClassName={Styles.active} to={`/panel/manufacturing/create`}>
+                        <i className={`material-icons ${Styles.create}`}>library_add</i>
+                    </NavLink> : '' : ''
+                }
             </h3>
             <div className={Styles.block}>
                 <div className={Styles.wrapper}>

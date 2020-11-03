@@ -6,8 +6,7 @@ import { useIncome } from '../../../hooks/income.hook'
 import Styles from './Income.module.css'
 
 export const Income = () => {
-    const { data, loading } = useGet('/api/stoneIncome/getAllSections')
-    console.log(data)
+    const { data, loading, admin } = useGet('/api/stoneIncome/getAllSections')
     const { incomeData, outcomeData, remainderData } = useIncome(data.income, data.outcome, data.remainder)
     let total = []
     const toExcel = total.concat({'#': 'Приходы'}, incomeData, {'#': 'Расходы'}, outcomeData, {'#': 'Остаток'}, remainderData)
@@ -17,9 +16,13 @@ export const Income = () => {
             <>
                 <h3 className={Styles.heading}>
                     Приход
-                    <NavLink activeClassName={Styles.active} to={`/panel/income/create`}>
-                        <i className={`material-icons ${Styles.create}`}>library_add</i>
-                    </NavLink>
+                    {
+                        admin ?
+                        admin.length > 1 ? 
+                        <NavLink activeClassName={Styles.active} to={`/panel/income/create`}>
+                            <i className={`material-icons ${Styles.create}`}>library_add</i>
+                        </NavLink> : '' : ''
+                    }
                 </h3>
                 <div className={Styles.loading}></div>
             </>
@@ -29,9 +32,13 @@ export const Income = () => {
         <div className={Styles.income}>
             <h3 className={Styles.heading}>
                 Приход
-                <NavLink activeClassName={Styles.active} to={`/panel/income/create`}>
-                    <i className={`material-icons ${Styles.create}`}>library_add</i>
-                </NavLink>
+                {
+                    admin ?
+                    admin.length > 1 ? 
+                    <NavLink activeClassName={Styles.active} to={`/panel/income/create`}>
+                        <i className={`material-icons ${Styles.create}`}>library_add</i>
+                    </NavLink> : '' : ''
+                }
             </h3>
             <div className={Styles.block}>
                 <div className={Styles.wrapper}>
