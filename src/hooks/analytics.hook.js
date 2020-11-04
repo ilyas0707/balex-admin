@@ -1,8 +1,9 @@
 export const useAnalytics = (income, expenses) => {
 
-    const incomeData = income ? income.map(({ incomeCategory, description, value, date }) => {
+    const incomeData = income ? income.map(({ id, incomeCategory, description, value, date }) => {
         let dateFormatted = new Date(date)
-        return { 
+        return {
+            id: id,
             category: incomeCategory, 
             description: description,
             value: value,
@@ -10,9 +11,10 @@ export const useAnalytics = (income, expenses) => {
         }
     }) : ''
 
-    const expensesData = expenses ? expenses.map(({ expenseCategory, description, value, date }) => {
+    const expensesData = expenses ? expenses.map(({ id, expenseCategory, description, value, date }) => {
         let dateFormatted = new Date(date)
-        return { 
+        return {
+            id: id,
             category: expenseCategory, 
             description: description,
             value: value,

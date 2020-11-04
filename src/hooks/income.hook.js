@@ -1,9 +1,10 @@
 export const useIncome = (income, outcome, remainder) => {
 
-    const incomeData = income ? income.map(({ billNumber, driverName, carNumber, layer, volume, pricePerCube, pricePaid, statusPaid, date }) => {
+    const incomeData = income ? income.map(({ id, billNumber, driverName, carNumber, layer, volume, pricePerCube, pricePaid, statusPaid, date }) => {
         let dateFormatted = new Date(date)
-        return { 
-            billNumber: billNumber, 
+        return {
+            id: id,
+            billNumber: billNumber,
             driverName: driverName, 
             carNumber: carNumber, 
             layer: layer, 
@@ -12,13 +13,14 @@ export const useIncome = (income, outcome, remainder) => {
             total: volume * pricePerCube,
             pricePaid: pricePaid,
             statusPaid: statusPaid,
-            date: `${dateFormatted.getDate()}/${dateFormatted.getMonth() + 1}/${dateFormatted.getFullYear()}` 
+            date: `${dateFormatted.getDate()}/${dateFormatted.getMonth() + 1}/${dateFormatted.getFullYear()}`
         }
     }) : ''
 
-    const outcomeData = outcome ? outcome.map(({ layer, stoneMachine, stoneVolume, date }) => {
+    const outcomeData = outcome ? outcome.map(({ id, layer, stoneMachine, stoneVolume, date }) => {
         let dateFormatted = new Date(date)
-        return { 
+        return {
+            id: id,
             layer: layer, 
             stoneMachine: stoneMachine.name, 
             stoneVolume: stoneVolume, 

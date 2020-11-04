@@ -51,3 +51,11 @@
 .date {
     display: inline-block;
 }
+
+.deleteButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+}

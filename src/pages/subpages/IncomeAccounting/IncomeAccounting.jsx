@@ -32,7 +32,23 @@ export const IncomeAccounting = () => {
         )
     }
     if (admin) {
-        if (admin.length === 1) {
+        // let adminVerif = admin.map(({ role }) => {
+        //     if (role === 'ROLE_ADMIN' || role === 'ROLE_ACCOUNTANT') {
+        //         return true
+        //     }
+        // })
+
+        var found = false
+        for(var i = 0; i < admin.length; i++) {
+            if (admin[i].role === 'ROLE_ADMIN' || admin[i].role === 'ROLE_ACCOUNTANT') {
+                found = true
+                break
+            } else {
+                found = false
+            }
+        }
+
+        if (found === false) {
             return (
                 <div className={Styles.warning}><i className={`material-icons ${Styles.icon}`}>error</i></div>
             )

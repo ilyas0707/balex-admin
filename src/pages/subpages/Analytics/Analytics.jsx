@@ -3,10 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { Export } from '../../../components/Export/Export';
 import { useAnalytics } from '../../../hooks/analytics.hook';
 import { useGet } from '../../../hooks/get.hook';
+import { useDelete } from '../../../hooks/delete.hook';
 import Styles from './Analytics.module.css'
 
 export const Analytics = () => {
     const { data, loading, admin } = useGet('/admin/finance/getThisMonthSections')
+    const { deleteHandler } = useDelete('finance')
     const { incomeData, expensesData } = useAnalytics(data.income, data.expense)
     const total = []
     const toExcel = total.concat({'#': 'Приходящие транзакции'}, incomeData, {'#': 'Уходящие транзакции'}, expensesData)
@@ -34,7 +36,17 @@ export const Analytics = () => {
         )
     }
     if (admin) {
-        if (admin.length === 1) {
+        var found = false
+        for(var i = 0; i < admin.length; i++) {
+            if (admin[i].role === 'ROLE_ADMIN') {
+                found = true
+                break
+            } else {
+                found = false
+            }
+        }
+
+        if (found === false) {
             return (
                 <div className={Styles.warning}><i className={`material-icons ${Styles.icon}`}>error</i></div>
             )
@@ -57,18 +69,21 @@ export const Analytics = () => {
                     <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
                         <caption>Приходящие транзакции</caption>
                         <thead>
-                            <tr><th>Категория</th><th>Описание</th><th>Сумма</th><th>Дата</th></tr>
+                            <tr><th>Категория</th><th>Описание</th><th>Сумма</th><th>Дата</th><th></th></tr>
                         </thead>
                         <tbody>
                             {
                                 incomeData ?
-                                incomeData.map(({ category, description, value, date }, i) => {
+                                incomeData.map(({ id, category, description, value, date }, i) => {
                                     return (
                                         <tr key={ i }>
                                             <td>{ category }</td>
                                             <td>{ description }</td>
                                             <td>{ value }</td>
                                             <td width="1%">{ date }</td>
+                                            <td width="1%">
+                                                <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/admin/finance/deleteIncome', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
+                                            </td>
                                         </tr>
                                     )
                                 }) : null
@@ -80,18 +95,21 @@ export const Analytics = () => {
                     <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
                         <caption>Уходящие транзакции</caption>
                         <thead>
-                            <tr><th>Категория</th><th>Описание</th><th>Сумма</th><th>Дата</th></tr>
+                            <tr><th>Категория</th><th>Описание</th><th>Сумма</th><th>Дата</th><th></th></tr>
                         </thead>
                         <tbody>
                             {
                                 expensesData ?
-                                expensesData.map(({ category, description, value, date }, i) => {
+                                expensesData.map(({ id, category, description, value, date }, i) => {
                                     return (
                                         <tr key={ i }>
                                             <td>{ category }</td>
                                             <td>{ description }</td>
                                             <td>{ value }</td>
                                             <td width="1%">{ date }</td>
+                                            <td width="1%">
+                                                <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/admin/finance/deleteExpense', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
+                                            </td>
                                         </tr>
                                     )
                                 }) : null

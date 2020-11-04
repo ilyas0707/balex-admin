@@ -1,8 +1,9 @@
 export const useRealization = (realization, remainder) => {
 
-    const realizationData = realization ? realization.map(({ clientName, layer, dimension, square, pricePerSquare, date }) => {
+    const realizationData = realization ? realization.map(({ id, clientName, layer, dimension, square, pricePerSquare, date }) => {
         let dateFormatted = new Date(date)
-        return { 
+        return {
+            id: id,
             clientName: clientName, 
             layer: layer,
             dimension: dimension,

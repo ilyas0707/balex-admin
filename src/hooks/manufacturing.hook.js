@@ -1,8 +1,9 @@
 export const useManufacturing = (manufacturing, remainder) => {
 
-    const manufacturingData = manufacturing ? manufacturing.map(({ layer, dimension, volume, square, date }) => {
+    const manufacturingData = manufacturing ? manufacturing.map(({ id, layer, dimension, volume, square, date }) => {
         let dateFormatted = new Date(date)
-        return { 
+        return {
+            id: id, 
             layer: layer, 
             dimension: dimension, 
             volume: volume,

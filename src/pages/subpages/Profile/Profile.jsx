@@ -3,33 +3,40 @@ import Styles from './Profile.module.css'
 
 import { useAuth } from '../../../hooks/auth.hook'
 import { NavLink } from 'react-router-dom'
+import { useGet } from '../../../hooks/get.hook'
+import { useUsers } from '../../../hooks/users.hook'
+import { useDelete } from '../../../hooks/delete.hook'
+import { useRole } from '../../../hooks/role.hook'
 
 import Man from './../../../assets/icons/man.png'
 import Woman from './../../../assets/icons/woman.png'
 
-import { LineChart, ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-
 export const Profile = () => {
     const { profile } = useAuth()
+    const { data, loading } = useGet('/admin/users/getAll')
+    const { usersData } = useUsers(data.object)
+    const { deleteHandler } = useDelete('profile')
+    const { roleHandler } = useRole('profile')
     const user = profile.object
     const admin = profile.userRole
 
-    const line = [
-        { name: 'Янв.', 'Приход': 4000, 'Реализация': 2400 },
-        { name: 'Фев.', 'Приход': 3000, 'Реализация': 1398 },
-        { name: 'Март', 'Приход': 2000, 'Реализация': 9800 },
-        { name: 'Апр.', 'Приход': 2780, 'Реализация': 3908 },
-        { name: 'Май', 'Приход': 1890, 'Реализация': 4800 },
-        { name: 'Июнь', 'Приход': 2390, 'Реализация': 3800 },
-        { name: 'Июль', 'Приход': 3490, 'Реализация': 4300 },
-        { name: 'Авг.', 'Приход': 1100, 'Реализация': 1500 },
-        { name: 'Сент.', 'Приход': 3400, 'Реализация': 2200 },
-        { name: 'Окт.', 'Приход': 2560, 'Реализация': 3700 },
-        { name: 'Нояб.', 'Приход': 1400, 'Реализация': 1900 },
-        { name: 'Дек.', 'Приход': 3600, 'Реализация': 2450 },
-    ]
+    if (loading) {
+        return (
+            <div className={Styles.loading}></div>
+        )
+    }
 
     if (admin) {
+        var found = false
+        for(var i = 0; i < admin.length; i++) {
+            if (admin[i].role === 'ROLE_ADMIN') {
+                found = true
+                break
+            } else {
+                found = false
+            }
+        }
+
         return (
             <>
                 <div className={Styles.profile}>
@@ -60,7 +67,7 @@ export const Profile = () => {
                     </div>
                     <div className={Styles.buttons}>
                         { 
-                            admin.length > 1 ? 
+                            found ? 
                             <NavLink activeClassName={Styles.active} to={`/panel/profile/createUser`}>
                                 <i className={`material-icons ${Styles.key}`}>create</i>
                                 <span className={Styles.text}>Создать</span>
@@ -72,26 +79,37 @@ export const Profile = () => {
                         </NavLink>
                     </div>
                 </div>
-                <div className={Styles.block}>
-                    <div className={Styles.chart}>
-                        <ResponsiveContainer>
-                            <LineChart
-                                data={line}
-                                margin={{
-                                top: 5, right: 30, left: 20, bottom: 5,
-                                }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Line type="monotone" dataKey="Реализация" stroke="#304269" />
-                                <Line type="monotone" dataKey="Приход" stroke="#F26101" activeDot={{ r: 8 }} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
+                {
+                    found ? 
+                    <div className={Styles.wrapper}>
+                        <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                            <caption>Пользователи</caption>
+                            <thead>
+                                <tr><th>Имя</th><th>Логин</th><th>Роль</th><th></th><th></th></tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    usersData ?
+                                    usersData.map(({ id, fullname, username, role }, i) => {
+                                        return (
+                                            <tr key={ i }>
+                                                <td>{ fullname }</td>
+                                                <td>{ username }</td>
+                                                <td>{ role }</td>
+                                                <td width="1%">
+                                                    <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/admin/users/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
+                                                </td>
+                                                <td width="1%">
+                                                    <button className={Styles.deleteButton} type="submit" onClick={() => {roleHandler('/admin/users/createForUser', id)}}><i className={`material-icons ${Styles.delete}`}>admin_panel_settings</i></button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }) : null
+                                }
+                            </tbody>
+                        </table>
+                    </div> : ''
+                }
             </>
         )
     }
