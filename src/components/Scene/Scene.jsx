@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import { Income } from '../../pages/subpages/Income/Income'
 import { IncomeCreate } from '../../pages/subpages/Income/IncomeCreate'
+import { OutcomeCreate } from '../../pages/subpages/Income/OutcomeCreate'
 import { IncomeAccounting } from '../../pages/subpages/IncomeAccounting/IncomeAccounting'
 import { IncomeAccountingCreate } from '../../pages/subpages/IncomeAccounting/IncomeAccountingCreate'
 import { Manufacturing } from '../../pages/subpages/Manufacturing/Manufacturing'
@@ -26,6 +27,9 @@ export const Scene = () => {
                 </Route>
                 <Route path="/panel/income/create" exact>
                     <IncomeCreate />
+                </Route>
+                <Route path="/panel/outcome/create" exact>
+                    <OutcomeCreate />
                 </Route>
                 <Route path="/panel/incomeAccounting" exact>
                     <IncomeAccounting />

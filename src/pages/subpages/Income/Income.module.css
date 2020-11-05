@@ -30,6 +30,7 @@
 
 .create {
     color: #304269;
+    transform: translateY(3px);
 }
 
 .wrapper {
@@ -46,6 +47,10 @@
     text-align: left;
     font-size: 24px;
     margin-bottom: 30px;
+}
+
+.table > caption > a {
+    margin-left: 5px;
 }
 
 .date {

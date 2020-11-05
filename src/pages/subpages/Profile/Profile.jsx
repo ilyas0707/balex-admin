@@ -7,6 +7,7 @@ import { useGet } from '../../../hooks/get.hook'
 import { useUsers } from '../../../hooks/users.hook'
 import { useDelete } from '../../../hooks/delete.hook'
 import { useRole } from '../../../hooks/role.hook'
+import { ExportPast } from '../../../components/ExportPast/ExportPast'
 
 import Man from './../../../assets/icons/man.png'
 import Woman from './../../../assets/icons/woman.png'
@@ -110,6 +111,7 @@ export const Profile = () => {
                         </table>
                     </div> : ''
                 }
+                <ExportPast />
             </>
         )
     }

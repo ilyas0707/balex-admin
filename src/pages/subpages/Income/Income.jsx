@@ -30,12 +30,6 @@ export const Income = () => {
             <>
                 <h3 className={Styles.heading}>
                     Приход
-                    {
-                        found ? 
-                        <NavLink activeClassName={Styles.active} to={`/panel/income/create`}>
-                            <i className={`material-icons ${Styles.create}`}>library_add</i>
-                        </NavLink> : ''
-                    }
                 </h3>
                 <div className={Styles.loading}></div>
             </>
@@ -45,17 +39,19 @@ export const Income = () => {
         <div className={Styles.income}>
             <h3 className={Styles.heading}>
                 Приход
-                {
-                    found ? 
-                    <NavLink activeClassName={Styles.active} to={`/panel/income/create`}>
-                        <i className={`material-icons ${Styles.create}`}>library_add</i>
-                    </NavLink> : ''
-                }
             </h3>
             <div className={Styles.block}>
                 <div className={Styles.wrapper}>
                     <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
-                        <caption>Приходы</caption>
+                        <caption>
+                            Приходы
+                            {
+                                found ? 
+                                <NavLink activeClassName={Styles.active} to={`/panel/income/create`}>
+                                    <i className={`material-icons ${Styles.create}`}>library_add</i>
+                                </NavLink> : ''
+                            }
+                        </caption>
                         <thead>
                             <tr><th>Накладная</th><th>ФИО</th><th>Гос.номер</th><th>Слой</th><th>Объём</th><th>Цена(m3)</th><th>Итого</th><th>Дата</th>{found ? <th></th> : null}</tr>
                         </thead>
@@ -88,7 +84,15 @@ export const Income = () => {
                 </div>
                 <div className={Styles.wrapper}>
                     <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
-                        <caption>Расходы</caption>
+                        <caption>
+                            Расходы
+                            {
+                                found ? 
+                                <NavLink activeClassName={Styles.active} to={`/panel/outcome/create`}>
+                                    <i className={`material-icons ${Styles.create}`}>library_add</i>
+                                </NavLink> : ''
+                            }
+                        </caption>
                         <thead>
                             <tr><th>Станок</th><th>Слой</th><th>Объём</th><th>Дата</th>{found ? <th></th> : null}</tr>
                         </thead>

@@ -25,15 +25,17 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
 
     const addIncome = async () => {
         try {
-            const data = await request(`${API_URL}/${url}`, "POST", url === 'api/stoneIncome/createForVolume' ? [{...form}] : {...form}, {
+            const data = await request(`${API_URL}/${url}`, "POST", {...form}, {
                 Authorization: `Basic ${code.hashed}`
             })
             successMessage(data.message)
             history.push('/')
             if (component === 'createUser') {
                 history.push('panel/profile/createUser')
-            }else if (component === 'income') {
+            } else if (component === 'income') {
                 history.push('panel/income/create')
+            } else if (component === 'outcome') {
+                history.push('panel/outcome/create')
             } else if (component === 'incomeAccounting') {
                 history.push('panel/incomeAccounting/create')
             } else if (component === 'manufacturing') {
@@ -54,8 +56,8 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
             clients.map((element) => {
                 setForm({ 
                     ...form, [e.target.name]: element.id === +e.target.value ? 
-                    element : e.target.name === 'pricePaid' ? 
-                    +e.target.value : e.target.value
+                    +e.target.value : e.target.name === 'pricePaid' ?
+                    +e.target.value : +e.target.value
                 })
             })
         }

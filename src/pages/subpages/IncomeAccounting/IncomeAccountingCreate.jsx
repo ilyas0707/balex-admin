@@ -16,7 +16,7 @@ export const IncomeAccountingCreate = () => {
             [{ label: 'Клиент', id: 'undefined' }], 
             data.object ?
             data.object.map((element) => {
-                return { label: element.driverName, id: element.id }
+                return { label: `${element.driverName}-${element.billNumber}`, id: element.id }
             }) : ''
         ] },
     ]

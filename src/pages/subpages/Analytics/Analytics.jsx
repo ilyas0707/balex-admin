@@ -8,10 +8,11 @@ import Styles from './Analytics.module.css'
 
 export const Analytics = () => {
     const { data, loading, admin } = useGet('/admin/finance/getThisMonthSections')
+    console.log(data);
     const { deleteHandler } = useDelete('analytics')
-    const { incomeData, expensesData } = useAnalytics(data.income, data.expense)
+    const { stoneIncomeData, realizationData, incomeData, expensesData } = useAnalytics(data.stoneIncome, data.realization, data.income, data.expense)
     const total = []
-    const toExcel = total.concat({'#': 'Приходящие транзакции'}, incomeData, {'#': 'Уходящие транзакции'}, expensesData)
+    const toExcel = total.concat({'#': 'Приход камня'}, stoneIncomeData, {'#': 'Реализация камня'}, realizationData, {'#': 'Приходящие транзакции'}, incomeData, {'#': 'Уходящие транзакции'}, expensesData)
 
     if (loading) {
         return (
@@ -65,6 +66,58 @@ export const Analytics = () => {
                 }
             </h3>
             <div className={Styles.block}>
+            <div className={Styles.wrapper}>
+                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                        <caption>Приход камня</caption>
+                        <thead>
+                            <tr><th>Категория</th><th>Описание</th><th>Сумма</th><th>Дата</th><th></th></tr>
+                        </thead>
+                        <tbody>
+                            {
+                                stoneIncomeData ?
+                                stoneIncomeData.map(({ id, category, description, value, date }, i) => {
+                                    return (
+                                        <tr key={ i }>
+                                            <td>{ category }</td>
+                                            <td>{ description }</td>
+                                            <td>{ value }</td>
+                                            <td width="1%">{ date }</td>
+                                            <td width="1%">
+                                                <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/admin/finance/deleteExpense', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
+                                            </td>
+                                        </tr>
+                                    )
+                                }) : null
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div className={Styles.wrapper}>
+                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                        <caption>Реализация камня</caption>
+                        <thead>
+                            <tr><th>Категория</th><th>Описание</th><th>Сумма</th><th>Дата</th><th></th></tr>
+                        </thead>
+                        <tbody>
+                            {
+                                realizationData ?
+                                realizationData.map(({ id, category, description, value, date }, i) => {
+                                    return (
+                                        <tr key={ i }>
+                                            <td>{ category }</td>
+                                            <td>{ description }</td>
+                                            <td>{ value }</td>
+                                            <td width="1%">{ date }</td>
+                                            <td width="1%">
+                                                <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/admin/finance/deleteIncome', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
+                                            </td>
+                                        </tr>
+                                    )
+                                }) : null
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <div className={Styles.wrapper}>
                     <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
                         <caption>Приходящие транзакции</caption>

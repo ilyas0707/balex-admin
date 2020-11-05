@@ -1,8 +1,8 @@
 export const useSort = () => {
     function sortByStatus(a, b) {
-        if (a.status > b.status) {
+        if (a.statusPaid > b.statusPaid) {
             return 1
-        } else if (a.status < b.status) {
+        } else if (a.statusPaid < b.statusPaid) {
             return -1
         } else {
             return 0

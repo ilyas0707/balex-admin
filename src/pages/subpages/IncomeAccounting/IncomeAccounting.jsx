@@ -13,31 +13,7 @@ export const IncomeAccounting = () => {
     let total = []
     const toExcel = total.concat({'#': 'Приходы'}, incomeData)
 
-    if (loading) {
-        return (
-            <>
-                {
-                    admin ?
-                    admin.length === 1 ?
-                    '' :
-                    <h3 className={Styles.heading}>
-                        Приход <br/> (Бухгалтер)
-                        <NavLink activeClassName={Styles.active} to={`/panel/incomeAccounting/create`}>
-                            <i className={`material-icons ${Styles.create}`}>library_add</i>
-                        </NavLink>
-                    </h3> : ''
-                }
-                <div className={Styles.loading}></div>
-            </>
-        )
-    }
     if (admin) {
-        // let adminVerif = admin.map(({ role }) => {
-        //     if (role === 'ROLE_ADMIN' || role === 'ROLE_ACCOUNTANT') {
-        //         return true
-        //     }
-        // })
-
         var found = false
         for(var i = 0; i < admin.length; i++) {
             if (admin[i].role === 'ROLE_ADMIN' || admin[i].role === 'ROLE_ACCOUNTANT') {
@@ -48,6 +24,40 @@ export const IncomeAccounting = () => {
             }
         }
 
+        var show = false
+        // eslint-disable-next-line
+        for(var i = 0; i < admin.length; i++) {
+            if (admin[i].role === 'ROLE_ACCOUNTANT') {
+                show = true
+                break
+            } else {
+                show = false
+            }
+        }
+    }
+
+    if (loading) {
+        return (
+            <>
+                {
+                    admin ?
+                    admin.length === 1 ?
+                    '' :
+                    <h3 className={Styles.heading}>
+                        Приход <br/> (Бухгалтер)
+                        {
+                            show ?
+                            <NavLink activeClassName={Styles.active} to={`/panel/incomeAccounting/create`}>
+                                <i className={`material-icons ${Styles.create}`}>library_add</i>
+                            </NavLink> : ''
+                        }
+                    </h3> : ''
+                }
+                <div className={Styles.loading}></div>
+            </>
+        )
+    }
+    if (admin) {
         if (found === false) {
             return (
                 <div className={Styles.warning}><i className={`material-icons ${Styles.icon}`}>error</i></div>
@@ -58,9 +68,12 @@ export const IncomeAccounting = () => {
         <div className={Styles.income}>
             <h3 className={Styles.heading}>
                 Приход <br/> (Бухгалтер)
-                <NavLink activeClassName={Styles.active} to={`/panel/incomeAccounting/create`}>
-                    <i className={`material-icons ${Styles.create}`}>library_add</i>
-                </NavLink>
+                {
+                    show ?
+                    <NavLink activeClassName={Styles.active} to={`/panel/incomeAccounting/create`}>
+                        <i className={`material-icons ${Styles.create}`}>library_add</i>
+                    </NavLink> : ''
+                }
             </h3>
             <div className={Styles.block}>
                 <div className={Styles.wrapper}>
