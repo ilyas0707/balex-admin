@@ -8,7 +8,7 @@ import Styles from './Analytics.module.css'
 
 export const Analytics = () => {
     const { data, loading, admin } = useGet('/admin/finance/getThisMonthSections')
-    const { deleteHandler } = useDelete('finance')
+    const { deleteHandler } = useDelete('analytics')
     const { incomeData, expensesData } = useAnalytics(data.income, data.expense)
     const total = []
     const toExcel = total.concat({'#': 'Приходящие транзакции'}, incomeData, {'#': 'Уходящие транзакции'}, expensesData)

@@ -76,7 +76,7 @@ export const Realization = () => {
                                             {
                                                 found ?
                                                 <td width="1%">
-                                                    <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/api/stoneIncome/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
+                                                    <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/api/realization/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
                                                 </td> : null
                                             }
                                         </tr>

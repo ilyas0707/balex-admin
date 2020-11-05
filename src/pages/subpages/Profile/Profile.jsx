@@ -100,7 +100,7 @@ export const Profile = () => {
                                                     <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/admin/users/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
                                                 </td>
                                                 <td width="1%">
-                                                    <button className={Styles.deleteButton} type="submit" onClick={() => {roleHandler('/admin/users/createForUser', id)}}><i className={`material-icons ${Styles.delete}`}>admin_panel_settings</i></button>
+                                                    <button className={Styles.deleteButton} type="submit" onClick={() => {roleHandler('/admin/userRoles/createForUser', id)}}><i className={`material-icons ${Styles.delete}`}>admin_panel_settings</i></button>
                                                 </td>
                                             </tr>
                                         )

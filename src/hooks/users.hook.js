@@ -6,15 +6,8 @@ export const useUsers = (users) => {
             fullname: fullname,
             username: username,
             // eslint-disable-next-line
-            role: roles ? roles.map((role) => {
-                if (role === 'ROLE_ACCOUNTANT') {
-                    return 'Бухгалтер'
-                } else if (role === 'ROLE_USER') {
-                    return 'Пользователь'
-                } else if (role === 'ROLE_ADMIN') {
-                    return 'Админ'
-                }
-            }).join('-') : ''
+            role: roles ? roles.includes('ROLE_ADMIN') ? 'Админ' : roles.includes('ROLE_ACCOUNTANT') ? 'Бухгалтер' : roles.includes('ROLE_USER') ? 'Пользователь' : ''
+            : ''
         }
     }) : ''
 
