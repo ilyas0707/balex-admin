@@ -8,7 +8,6 @@ import Styles from './Analytics.module.css'
 
 export const Analytics = () => {
     const { data, loading, admin } = useGet('/admin/finance/getThisMonthSections')
-    console.log(data);
     const { deleteHandler } = useDelete('analytics')
     const { stoneIncomeData, realizationData, incomeData, expensesData } = useAnalytics(data.stoneIncome, data.realization, data.income, data.expense)
     const total = []

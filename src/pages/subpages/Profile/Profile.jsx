@@ -92,19 +92,18 @@ export const Profile = () => {
                                 {
                                     usersData ?
                                     usersData.map(({ id, fullname, username, role }, i) => {
-                                        return (
-                                            <tr key={ i }>
-                                                <td>{ fullname }</td>
-                                                <td>{ username }</td>
-                                                <td>{ role }</td>
-                                                <td width="1%">
-                                                    <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/admin/users/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
-                                                </td>
-                                                <td width="1%">
-                                                    <button className={Styles.deleteButton} type="submit" onClick={() => {roleHandler('/admin/userRoles/createForUser', id)}}><i className={`material-icons ${Styles.delete}`}>admin_panel_settings</i></button>
-                                                </td>
-                                            </tr>
-                                        )
+                                        return username === 'god' ? null :
+                                        <tr key={ i }>
+                                            <td>{ fullname }</td>
+                                            <td>{ username }</td>
+                                            <td>{ role }</td>
+                                            <td width="1%">
+                                                <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/admin/users/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
+                                            </td>
+                                            <td width="1%">
+                                                <button className={Styles.deleteButton} type="submit" onClick={() => {roleHandler('/admin/userRoles/createForUser', id)}}><i className={`material-icons ${Styles.delete}`}>admin_panel_settings</i></button>
+                                            </td>
+                                        </tr>
                                     }) : null
                                 }
                             </tbody>

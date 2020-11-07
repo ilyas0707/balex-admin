@@ -28,7 +28,11 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
             const data = await request(`${API_URL}/${url}`, "POST", {...form}, {
                 Authorization: `Basic ${code.hashed}`
             })
-            successMessage(data.message)
+            if (data.successful === false) {
+                errorMessage("Поля не должны быть пустыми!")
+            } else {
+                successMessage(data.message)
+            }
             history.push('/')
             if (component === 'createUser') {
                 history.push('panel/profile/createUser')
@@ -121,7 +125,8 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                                     name={ name }
                                     placeholder={ label }
                                     autoComplete="off"
-                                    onChange={changeHandler} />
+                                    onChange={changeHandler}
+                                    value="" />
                             </div>
                         )
                     }) : ''

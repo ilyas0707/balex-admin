@@ -64,7 +64,7 @@ export const ChangePassword = () => {
     
     return (
         <div className={Styles.form}>
-            <div className={Styles.block}>
+            <form className={Styles.block}>
                 <h3 className={Styles.heading}>Изменить пароль</h3>
                 <div className={Styles.item}>
                     <input 
@@ -85,7 +85,7 @@ export const ChangePassword = () => {
                         onChange={checkPasswordHandler} />
                 </div>
                 <button type="submit" onClick={() => {changePassword()}} className={Styles.submit}>Изменить</button>
-            </div>
+            </form>
         </div>
     )
 }
