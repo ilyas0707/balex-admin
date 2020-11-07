@@ -125,8 +125,7 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                                     name={ name }
                                     placeholder={ label }
                                     autoComplete="off"
-                                    onChange={changeHandler}
-                                    value="" />
+                                    onChange={changeHandler} />
                             </div>
                         )
                     }) : ''
