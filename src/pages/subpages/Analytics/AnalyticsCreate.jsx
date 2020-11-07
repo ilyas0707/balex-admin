@@ -25,7 +25,7 @@ export const AnalyticsCreate = () => {
     ]
 
     const selectExpenses = [
-        { name: "expensesCategory", options: [[
+        { name: "expenseCategory", options: [[
             { label: 'Категории', id: '' }, 
             { label: 'Транспорт', id: 'TRANSPORT' }, 
             { label: 'Зарплаты', id: 'SALARY' }, 

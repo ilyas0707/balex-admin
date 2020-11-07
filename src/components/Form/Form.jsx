@@ -101,9 +101,8 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                                             return (
                                                 element ?
                                                 element.map(({label, id}, i) => {
-                                                    return (
-                                                        <option key={ i } value={ id }>{ label }</option>
-                                                    )
+                                                    return label === '' ? null :
+                                                    <option key={ i } value={ id }>{ label }</option>
                                                 }) : ''
                                             )
                                         })
