@@ -13,7 +13,8 @@ export const OutcomeCreate = () => {
     ]
 
     const Outcome = [
-        { type: "number", name: "layer", label: "Слой"},
+        { type: "date", name: "date", label: "Дата"},
+        { type: "text", name: "layer", label: "Слой"},
         { type: "number", name: "stoneVolume", label: "Объём(m3)"},
     ]
 
@@ -21,7 +22,14 @@ export const OutcomeCreate = () => {
         { name: "stoneMachine", options: [
             [{ label: 'Станок', id: 'undefined' }], 
             data.object ?
-            data.object.map((element) => {
+            data.object.reduce((acc, current) => {
+                const x = acc.find(item => item.name === current.name);
+                if (!x) {
+                  return acc.concat([current]);
+                } else {
+                  return acc;
+                }
+              }, []).map((element) => {
                 return { label: element.name, id: element.name }
             }) : ''
         ] },
@@ -37,7 +45,14 @@ export const OutcomeCreate = () => {
 
     const tabs = [
         { data: Machine, url: 'admin/stoneMachine/create' },
-        { id: 'outcome', data: Outcome, url: 'admin/stoneOutcome/create', select: select, machines: data.object },
+        { id: 'outcome', data: Outcome, url: 'admin/stoneOutcome/create', select: select, machines: data.object ? data.object.reduce((acc, current) => {
+            const x = acc.find(item => item.name === current.name);
+            if (!x) {
+              return acc.concat([current]);
+            } else {
+              return acc;
+            }
+          }, []) : '' },
     ]
 
     if (loading) {

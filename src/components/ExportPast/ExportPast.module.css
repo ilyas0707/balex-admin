@@ -1,3 +1,19 @@
+@keyframes loading {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading {
+    display: inline-block;
+    border: 10px solid #ccc;
+    border-top: 10px solid #F26101;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: loading .5s linear infinite;
+    cursor: default;
+}
+
 .heading {
     text-align: left;
     font-size: 24px;
@@ -7,12 +23,11 @@
 
 .export {
     margin-top: 30px;
-    display: flex;
-    justify-content: center;
 }
 
 .form {
     width: 300px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -61,6 +76,7 @@
 }
 
 .submit {
+    width: 100%;
     border: none;
     background: #D9E8F5;
     padding: 15px 30px;
@@ -69,6 +85,12 @@
     cursor: pointer;
     border-radius: 10px;
     outline: none;
+}
+
+@media screen and (max-width: 400px) {
+    .form {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 300px) {

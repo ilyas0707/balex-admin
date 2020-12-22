@@ -83,7 +83,7 @@ export const Profile = () => {
                 {
                     found ? 
                     <div className={Styles.wrapper}>
-                        <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                        <table cellPadding="10" border="0" bordercolor="#304269" className={Styles.table}>
                             <caption>Пользователи</caption>
                             <thead>
                                 <tr><th>Имя</th><th>Логин</th><th>Роль</th><th></th><th></th></tr>
@@ -110,7 +110,10 @@ export const Profile = () => {
                         </table>
                     </div> : ''
                 }
-                <ExportPast />
+                {
+                    found ?
+                    <ExportPast /> : ''
+                }
             </>
         )
     }

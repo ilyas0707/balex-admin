@@ -4,7 +4,7 @@ import { useHttp } from "./http.hook"
 
 export const useGetPast = () => {
     const { code } = useAuth()
-    const { request, API_URL } = useHttp()
+    const { loading, request, API_URL } = useHttp()
     const [data, setData] = useState({})
 
     const pastHandler = (url, body) => {
@@ -18,5 +18,5 @@ export const useGetPast = () => {
 
     }
 
-    return { pastHandler, data }
+    return { pastHandler, data, loading }
 }

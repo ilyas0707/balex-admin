@@ -7,11 +7,13 @@ export const AnalyticsCreate = () => {
     const [opened, setOpened] = useState(0)
 
     const AnalyticsIncome = [
+        { type: "date", name: "date", label: "Дата"},
         { type: "text", name: "description", label: "Описание"},
         { type: "number", name: "value", label: "Сумма"},
     ]
 
     const AnalyticsExpenses = [
+        { type: "date", name: "date", label: "Дата"},
         { type: "text", name: "description", label: "Описание"},
         { type: "number", name: "value", label: "Сумма"},
     ]
@@ -35,6 +37,15 @@ export const AnalyticsCreate = () => {
         ]] },
     ]
 
+    const currency = [
+        { name: "currency", options: [
+            [{ label: 'Валюта', id: 'undefined' }], 
+            [{ label: 'Сом', id: 'SOM' }], 
+            [{ label: 'Доллар', id: 'USD' }], 
+            [{ label: 'Евро', id: 'EUR' }],
+        ] }, 
+    ]
+
     const openTab = (id) => {
         setOpened(id)
     }
@@ -44,8 +55,8 @@ export const AnalyticsCreate = () => {
     ]
 
     const tabs = [
-        { data: AnalyticsIncome, url: 'admin/finance/createIncome', select: selectIncome },
-        { data: AnalyticsExpenses, url: 'admin/finance/createExpenses', select: selectExpenses },
+        { data: AnalyticsIncome, url: 'admin/finance/createIncome', select: selectIncome, currency: currency },
+        { data: AnalyticsExpenses, url: 'admin/finance/createExpenses', select: selectExpenses, currency: currency },
     ]
 
     return (
@@ -67,10 +78,10 @@ export const AnalyticsCreate = () => {
                 }
             </div>
             {
-                tabs.map(({data, url, select}, i) => {
+                tabs.map(({data, url, select, currency}, i) => {
                     return (
                         <div key={ i } className={`${Styles.form} ${opened === i ? Styles.active : ''}`}>
-                            <Form component={ 'analytics' } data={ data } url={ url } select={ select } />
+                            <Form component={ 'analytics' } data={ data } url={ url } select={ select } currency={ currency } />
                         </div>
                     )
                 })

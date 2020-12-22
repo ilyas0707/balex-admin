@@ -3,6 +3,11 @@
     font-size: 26px;
 }
 
+.form {
+    width: 500px;
+    margin: 0 auto;
+}
+
 .block {
     margin-bottom: 10px;
     width: 100%;
@@ -12,12 +17,8 @@
 }
 
 .item {
-    width: 40%;
+    width: 100%;
     margin-bottom: 20px;
-}
-
-.item:nth-child(odd) {
-    margin-right: 1%;
 }
 
 .input {
@@ -89,10 +90,12 @@
 }
 
 @media screen and (max-width: 600px) {
+    .form {
+        width: 100%;
+    }
     .item {
         width: 100%;
     }
-
     .item:nth-child(odd) {
         margin-right: 0;
     }

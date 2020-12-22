@@ -30,7 +30,6 @@
 
 .create {
     color: #304269;
-    transform: translateY(3px);
 }
 
 .wrapper {
@@ -50,7 +49,13 @@
 }
 
 .table > caption > a {
-    margin-left: 5px;
+    display: inline-flex;
+    align-items: center;
+    background: #D9E8F5;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transform: translateY(5px);
+    margin-left: 10px;
 }
 
 .date {
@@ -63,4 +68,14 @@
     cursor: pointer;
     padding: 0;
     outline: none;
+}
+
+.label {
+    width: 100%;
+    text-align: right;
+    font-size: 20px;
+}
+
+.span {
+    font-weight: bold;
 }

@@ -5,7 +5,8 @@ import { Form } from './../../../components/Form/Form'
 
 export const IncomeCreate = () => {
     const Income = [
-        { type: "number", name: "layer", label: "Слой"},
+        { type: "date", name: "date", label: "Дата"},
+        { type: "text", name: "layer", label: "Слой"},
         { type: "number", name: "volume", label: "Объём(m3)"},
         { type: "text", name: "carNumber", label: "Гос. номер"},
         { type: "text", name: "driverName", label: "ФИО"},

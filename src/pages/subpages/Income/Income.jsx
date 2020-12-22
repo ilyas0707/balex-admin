@@ -1,17 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Export } from '../../../components/Export/Export'
 import { useGet } from '../../../hooks/get.hook'
 import { useDelete } from '../../../hooks/delete.hook'
 import { useIncome } from '../../../hooks/income.hook'
+import { useSortByDate } from '../../../hooks/sortByDate.hook'
+import ReactPaginate from "react-paginate"
 import Styles from './Income.module.css'
+import './Pagination.css'
+
+const PER_PAGE = 5
 
 export const Income = () => {
     const { data, loading, admin } = useGet('/api/stoneIncome/getAllSections')
     const { deleteHandler } = useDelete('income')
-    const { incomeData, outcomeData, remainderData } = useIncome(data.income, data.outcome, data.remainder)
+    const { sortByDate } = useSortByDate()
+    const { incomeData, outcomeData, remainderData, incomeSum1, incomeSum2, totalSum, outcomeSum1, outcomeSum2 } = useIncome(data.income, data.outcome, data.remainder)
     let total = []
-    const toExcel = total.concat({'#': 'Приходы'}, incomeData, {'#': 'Расходы'}, outcomeData, {'#': 'Остаток'}, remainderData)
+    const toExcel = total.concat(
+        {'#': 'Приходы'}, incomeData,
+        {
+            'Итого 1 слой': incomeSum1.reduce((a, b) => a + b, 0),
+            'Итого 2 слой': incomeSum2.reduce((a, b) => a + b, 0),
+            'Итого по слоям': incomeSum1.reduce((a, b) => a + b, 0) + incomeSum2.reduce((a, b) => a + b, 0),
+            'Итого': totalSum.reduce((a, b) => a + b, 0)
+        },
+        {'#': 'Расходы'}, outcomeData,
+        {
+            'Итого 1 слой': outcomeSum1.reduce((a, b) => a + b, 0),
+            'Итого 2 слой': outcomeSum2.reduce((a, b) => a + b, 0),
+            'Итого по слоям': outcomeSum1.reduce((a, b) => a + b, 0) + outcomeSum2.reduce((a, b) => a + b, 0)
+        },
+        {'#': 'Остаток'}, remainderData
+    )
+    const [incomeCurrentPage, setIncomeCurrentPage] = useState(0)
+    const [outcomeCurrentPage, setOncomeCurrentPage] = useState(0)
 
     var found = false
     if (admin) {
@@ -24,7 +47,20 @@ export const Income = () => {
             }
         }
     }
-        
+
+    function incomePageClick({ selected: selectedPage }) {
+        setIncomeCurrentPage(selectedPage)
+    }
+
+    function outcomePageClick({ selected: selectedPage }) {
+        setOncomeCurrentPage(selectedPage)
+    }
+
+    const incomeOffset = incomeCurrentPage * PER_PAGE
+    const outcomeOffset = outcomeCurrentPage * PER_PAGE
+    const incomePageCount = Math.ceil(incomeData ? incomeData.length / PER_PAGE : 0)
+    const outcomePageCount = Math.ceil(outcomeData ? outcomeData.length / PER_PAGE : 0)
+
     if (loading) {
         return (
             <>
@@ -42,7 +78,7 @@ export const Income = () => {
             </h3>
             <div className={Styles.block}>
                 <div className={Styles.wrapper}>
-                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                    <table cellPadding="10" border="0" bordercolor="#304269" className={Styles.table}>
                         <caption>
                             Приходы
                             {
@@ -53,22 +89,22 @@ export const Income = () => {
                             }
                         </caption>
                         <thead>
-                            <tr><th>Накладная</th><th>ФИО</th><th>Гос.номер</th><th>Слой</th><th>Объём</th><th>Цена(m3)</th><th>Итого</th><th>Дата</th>{found ? <th></th> : null}</tr>
+                            <tr><th>Дата</th><th>Накладная</th><th>ФИО</th><th>Гос.номер</th><th>Слой</th><th>Объём</th><th>Цена(m3)</th><th>Итого</th>{found ? <th></th> : null}</tr>
                         </thead>
                         <tbody>
                             {
                                 incomeData ?
-                                incomeData.map(({ id, billNumber, driverName, carNumber, layer, volume, pricePerCube, total, date }, i) => {
+                                incomeData.sort(sortByDate).slice(incomeOffset, incomeOffset + PER_PAGE).map(({ id, billNumber, driverName, carNumber, layer, volume, pricePerCube, total, date }, i) => {
                                     return (
                                         <tr key={ i }>
+                                            <td width="1%">{ date }</td>
                                             <td>{ billNumber }</td>
                                             <td>{ driverName }</td>
                                             <td>{ carNumber }</td>
                                             <td>{ layer }</td>
-                                            <td>{ volume }</td>
-                                            <td>{ pricePerCube }</td>
-                                            <td>{ total }</td>
-                                            <td width="1%">{ date }</td>
+                                            <td>{ `${volume} m3` }</td>
+                                            <td>{ `${pricePerCube} сом` }</td>
+                                            <td>{ `${total} сом` }</td>
                                             {
                                                 found ?
                                                 <td width="1%">
@@ -82,8 +118,25 @@ export const Income = () => {
                         </tbody>
                     </table>
                 </div>
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    pageCount={incomePageCount}
+                    onPageChange={incomePageClick}
+                    containerClassName={"pagination"}
+                    previousLinkClassName={"pagination__link"}
+                    nextLinkClassName={"pagination__link"}
+                    disabledClassName={"pagination__link--disabled"}
+                    activeClassName={"pagination__link--active"}
+                />
+                <div style={{marginBottom: '20px'}}>
+                    <p className={Styles.label}>Итого 1 слой: <span className={Styles.span}>{ `${(incomeSum1.reduce((a, b) => a + b, 0)).toFixed(1)} m3` }</span></p>
+                    <p className={Styles.label}>Итого 2 слой: <span className={Styles.span}>{ `${(incomeSum2.reduce((a, b) => a + b, 0)).toFixed(1)} m3` }</span></p>
+                    <p className={Styles.label}>Итого по слоям: <span className={Styles.span}>{ `${(incomeSum1.reduce((a, b) => a + b, 0) + incomeSum2.reduce((a, b) => a + b, 0)).toFixed(1)} m3` }</span></p>
+                    <p className={Styles.label}>Итого: <span className={Styles.span}>{ `${(totalSum.reduce((a, b) => a + b, 0)).toFixed(1)} сом` }</span></p>
+                </div>
                 <div className={Styles.wrapper}>
-                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                    <table cellPadding="10" border="0" bordercolor="#304269" className={Styles.table}>
                         <caption>
                             Расходы
                             {
@@ -94,18 +147,18 @@ export const Income = () => {
                             }
                         </caption>
                         <thead>
-                            <tr><th>Станок</th><th>Слой</th><th>Объём</th><th>Дата</th>{found ? <th></th> : null}</tr>
+                            <tr><th>Дата</th><th>Станок</th><th>Слой</th><th>Объём</th>{found ? <th></th> : null}</tr>
                         </thead>
                         <tbody>
                             {
                                 outcomeData ?
-                                outcomeData.map(({ id, layer, stoneMachine, stoneVolume, date }, i) => {
+                                outcomeData.sort(sortByDate).slice(outcomeOffset, outcomeOffset + PER_PAGE).map(({ id, layer, stoneMachine, stoneVolume, date }, i) => {
                                     return (
                                         <tr key={ i }>
+                                            <td width="1%">{ date }</td>
                                             <td>{ stoneMachine }</td>
                                             <td>{ layer }</td>
-                                            <td>{ stoneVolume }</td>
-                                            <td width="1%">{ date }</td>
+                                            <td>{ `${stoneVolume} m3` }</td>
                                             {
                                                 found ?
                                                 <td width="1%">
@@ -119,8 +172,24 @@ export const Income = () => {
                         </tbody>
                     </table>
                 </div>
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    pageCount={outcomePageCount}
+                    onPageChange={outcomePageClick}
+                    containerClassName={"pagination"}
+                    previousLinkClassName={"pagination__link"}
+                    nextLinkClassName={"pagination__link"}
+                    disabledClassName={"pagination__link--disabled"}
+                    activeClassName={"pagination__link--active"}
+                />
+                <div style={{marginBottom: '20px'}}>
+                    <p className={Styles.label}>Итого 1 слой: <span className={Styles.span}>{ `${(outcomeSum1.reduce((a, b) => a + b, 0)).toFixed(1)} m3` }</span></p>
+                    <p className={Styles.label}>Итого 2 слой: <span className={Styles.span}>{ `${(outcomeSum2.reduce((a, b) => a + b, 0)).toFixed(1)} m3` }</span></p>
+                    <p className={Styles.label}>Итого по слоям: <span className={Styles.span}>{ `${(outcomeSum1.reduce((a, b) => a + b, 0) + outcomeSum2.reduce((a, b) => a + b, 0)).toFixed(1)} m3` }</span></p>
+                </div>
                 <div className={Styles.wrapper}>
-                    <table cellPadding="7" border="1" bordercolor="#304269" className={Styles.table}>
+                    <table cellPadding="12" border="0" bordercolor="#304269" className={Styles.table}>
                         <caption>Остаток</caption>
                         <thead>
                             <tr><th>Слой</th><th>Объём</th></tr>
@@ -132,7 +201,7 @@ export const Income = () => {
                                     return (
                                         <tr key={ i }>
                                             <td>{ layer }</td>
-                                            <td>{ volume }</td>
+                                            <td>{ `${volume} m3` }</td>
                                         </tr>
                                     )
                                 }) : null

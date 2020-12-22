@@ -9,7 +9,7 @@ import { useSuccess } from '../../hooks/success.hook'
 import { useError } from '../../hooks/error.hook'
 import { useHistory } from 'react-router-dom'
 
-export const Form = ({component, id, data, select, url, machines, clients}) => {
+export const Form = ({component, id, data, select, url, machines, size, clients, clientSelect, currency, paymentType}) => {
     toast.configure({
         position: 'top-center',
         autoClose: 3000,
@@ -65,13 +65,51 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                 })
             })
         }
+        else if (id === 'realization') {
+            // eslint-disable-next-line
+            clients.map((element) => {
+                setForm({ 
+                    ...form, [e.target.name]: element.id === +e.target.value ? 
+                    +e.target.value : e.target.name === 'pricePaid' ?
+                    +e.target.value : e.target.name === 'date' ? 
+                    new Date(e.target.value).toISOString() : 
+                    e.target.name === 'currency' ? e.target.value : 
+                    e.target.name === 'paymentType' ? e.target.value : +e.target.value
+                })
+            })
+        }
+        else if (id === 'realizationCreate') {
+            setForm({ 
+                ...form, [e.target.name]: e.target.name === 'clientName' ? 
+                clients.filter(el => el.name === e.target.value)[0] : e.target.name === 'size' ? 
+                size.filter(el => el.size === e.target.value)[0] : e.target.name === 'layer' ?
+                e.target.value : e.target.name === 'orderNumber' ?
+                e.target.value : e.target.name === 'pricePaid' ?
+                +e.target.value : e.target.name === 'date' ? 
+                new Date(e.target.value).toISOString() : 
+                e.target.name === 'currency' ? e.target.value : 
+                e.target.name === 'paymentType' ? e.target.value : +e.target.value
+            })
+        }
+        else if (id === 'manufacturing') {
+            setForm({ 
+                ...form, [e.target.name]: e.target.name === 'stoneMachine' ? 
+                machines.filter(el => el.name === e.target.value)[0] : e.target.name === 'size' ? 
+                size.filter(el => el.size === e.target.value)[0] : e.target.name === 'stoneVolume' ? 
+                +e.target.value : e.target.name === 'layer' ? 
+                e.target.value : e.target.name === 'dimension' ? 
+                e.target.value : e.target.name === 'square' ? 
+                +e.target.value : e.target.name === 'date' ? new Date(e.target.value).toISOString() : machines.filter(el => el.name === e.target.value)[0], volume: 0
+            })
+        }
         else if (id === 'outcome') {
             // eslint-disable-next-line
             machines.map((element) => {
                 setForm({ 
-                    ...form, [e.target.name]: element.name === e.target.value ? 
+                    ...form, [e.target.name]: e.target.value === element.name ? 
                     element : e.target.name === 'stoneVolume' ? 
-                    +e.target.value : e.target.value
+                    +e.target.value : e.target.name === 'layer' ? 
+                    e.target.value : e.target.name === 'date' ? new Date(e.target.value).toISOString() : machines.filter(el => el.name === e.target.value)[0]
                 })
             })
         } else {
@@ -82,10 +120,12 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                 e.target.name === 'pricePerSquare' ||
                 e.target.name === 'age' || 
                 e.target.name === 'value' ?
-                +e.target.value : e.target.value
+                +e.target.value : e.target.name === 'date' ? new Date(e.target.value).toISOString() : e.target.value
             })
         }
     }
+
+    console.log(form);
 
     return (
         <div className={Styles.form}>
@@ -93,6 +133,29 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                 {
                     select ?
                     select.map(({name, options}, i) => {
+                        return (
+                            <div key={ i } className={`${Styles.item} ${Styles.relative}`}>
+                                <select className={Styles.select} name={ name } onChange={changeHandler}>
+                                    {
+                                        options.map((element) => {
+                                            return (
+                                                element ?
+                                                element.map(({label, id}, i) => {
+                                                    return label === '' ? null :
+                                                    <option key={ i } value={ id }>{ label }</option>
+                                                }) : ''
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <i className={`material-icons ${Styles.icon}`}>play_arrow</i>
+                            </div>
+                        )
+                    }) : ''
+                }
+                {
+                    clientSelect ?
+                    clientSelect.map(({name, options}, i) => {
                         return (
                             <div key={ i } className={`${Styles.item} ${Styles.relative}`}>
                                 <select className={Styles.select} name={ name } onChange={changeHandler}>
@@ -124,7 +187,54 @@ export const Form = ({component, id, data, select, url, machines, clients}) => {
                                     name={ name }
                                     placeholder={ label }
                                     autoComplete="off"
+                                    
                                     onChange={changeHandler} />
+                            </div>
+                        )
+                    }) : ''
+                }
+                {
+                    currency ?
+                    currency.map(({name, options}, i) => {
+                        return (
+                            <div key={ i } className={`${Styles.item} ${Styles.relative}`}>
+                                <select className={Styles.select} name={ name } onChange={changeHandler}>
+                                    {
+                                        options.map((element) => {
+                                            return (
+                                                element ?
+                                                element.map(({label, id}, i) => {
+                                                    return label === '' ? null :
+                                                    <option key={ i } value={ id }>{ label }</option>
+                                                }) : ''
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <i className={`material-icons ${Styles.icon}`}>play_arrow</i>
+                            </div>
+                        )
+                    }) : ''
+                }
+                {
+                    paymentType ?
+                    paymentType.map(({name, options}, i) => {
+                        return (
+                            <div key={ i } className={`${Styles.item} ${Styles.relative}`}>
+                                <select className={Styles.select} name={ name } onChange={changeHandler}>
+                                    {
+                                        options.map((element) => {
+                                            return (
+                                                element ?
+                                                element.map(({label, id}, i) => {
+                                                    return label === '' ? null :
+                                                    <option key={ i } value={ id }>{ label }</option>
+                                                }) : ''
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <i className={`material-icons ${Styles.icon}`}>play_arrow</i>
                             </div>
                         )
                     }) : ''

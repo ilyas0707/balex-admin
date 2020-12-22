@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { useAll } from '../../hooks/all.hook'
+import { useError } from '../../hooks/error.hook'
 import { useGetPast } from '../../hooks/getPast.hook'
-import { Export } from '../Export/Export'
+import { AllSections } from '../AllSections/AllSections'
 import Styles from './ExportPast.module.css'
 
 export const ExportPast = () => {
-    const { pastHandler, data } = useGetPast()
+    const { pastHandler, data, loading } = useGetPast()
     const [form, setForm] = useState({})
+    const errorMessage = useError()
 
-    const { stoneIncomeData, stoneOutcomeData, manufacturingData, realizationData, financeIncomeData, financeExpensesData } = useAll(data.stoneIncome, data.stoneOutcome, data.manufacturing, data.realization, data.financeIncome, data.financeExpenses)
-    let total = []
-    const toExcel = total.concat({'#': 'Приходы'}, stoneIncomeData, {'#': 'Расходы'}, stoneOutcomeData, {'#': 'Выработка'}, manufacturingData, {'#': 'Реализация'}, realizationData, {'#': 'Приходящие транзакции'}, financeIncomeData, {'#': 'Уходящие транзакции'}, financeExpensesData)
+    const { stoneIncomeData, stoneOutcomeData, manufacturingData, realizationData, financeIncomeData, financeExpensesData, incomeSum1, incomeSum2, totalIncomeSum, pricePaidSum, outcomeSum1, outcomeSum2, manufacturingSum1, manufacturingSum2, realizationSum1, realizationSum2, totalSumSOM, totalSumUSD, totalSumEUR, paidSumSOM, paidSumUSD, paidSumEUR, totalIncomeSumSOM, totalIncomeSumUSD, totalIncomeSumEUR, totalExpensesSumSOM, totalExpensesSumUSD, totalExpensesSumEUR } = useAll(data.stoneIncome, data.stoneOutcome, data.manufacturing, data.realization, data.financeIncome, data.financeExpenses)
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
@@ -38,23 +38,21 @@ export const ExportPast = () => {
                             type="submit" 
                             onClick={e => {
                                 e.preventDefault(); 
+                                form.dateBefore !== '' && form.dateAfter ?
                                 pastHandler('/api/login/getAllBetween', {
-                                    dayBefore: dateAfter.getDate(),
-                                    monthBefore: dateAfter.getMonth() + 1,
-                                    yearBefore: dateAfter.getFullYear(),
-                                    dayAfter: dateBefore.getDate(),
-                                    monthAfter: dateBefore.getMonth() + 1,
-                                    yearAfter: dateBefore.getFullYear()
-                                })
+                                    date1: dateBefore.toISOString(),
+                                    date2: dateAfter.toISOString(),
+                                }) : errorMessage('Вы должны ввести даты!')
                             }}>
                             Получить данные
                         </button>
-                        {
-                            data.stoneIncome && data.stoneOutcome && data.manufacturing && data.realization && data.financeIncome && data.financeExpenses ?
-                            <Export tableData={toExcel} fileName="pastData" /> : ''
-                        }
                     </div>
                 </form>
+                {
+                    loading ? <div className={Styles.loading}></div> :
+                    data.stoneIncome && data.stoneOutcome && data.manufacturing && data.realization && data.financeIncome && data.financeExpenses ?
+                    <AllSections data={ [stoneIncomeData, stoneOutcomeData, manufacturingData, realizationData, financeIncomeData, financeExpensesData, incomeSum1, incomeSum2, totalIncomeSum, pricePaidSum, outcomeSum1, outcomeSum2, manufacturingSum1, manufacturingSum2, realizationSum1, realizationSum2, totalSumSOM, totalSumUSD, totalSumEUR, paidSumSOM, paidSumUSD, paidSumEUR, totalIncomeSumSOM, totalIncomeSumUSD, totalIncomeSumEUR, totalExpensesSumSOM, totalExpensesSumUSD, totalExpensesSumEUR] } /> : ''
+                }
             </div>
         </>
     )
