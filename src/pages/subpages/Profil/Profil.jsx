@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './Profile.module.css'
+import Styles from './Profil.module.css'
 
 import { useAuth } from '../../../hooks/auth.hook'
 import { NavLink } from 'react-router-dom'
