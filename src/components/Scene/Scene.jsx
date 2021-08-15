@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import { Profil } from '../../pages/Subpages/Profil/Profil'
-import { Income } from '../../pages/Subpages/Income/Income'
-import { IncomeCreate } from '../../pages/Subpages/Income/IncomeCreate'
-import { Order } from '../../pages/Subpages/Order/Order'
-import { OrderCreate } from '../../pages/Subpages/Order/OrderCreate'
+import { Profil } from './../../pages/Subpages/Profil/Profil'
+import { Income } from './../../pages/Subpages/Income/Income'
+import { IncomeCreate } from './../../pages/Subpages/Income/IncomeCreate'
+import { Order } from './../../pages/Subpages/Order/Order'
+import { OrderCreate } from './../../pages/Subpages/Order/OrderCreate'
 
 import Styles from './Scene.module.css'
-import { Clients } from '../../pages/Subpages/Clients/Clients'
+import { Clients } from './../../pages/Subpages/Clients/Clients'
 
 export const Scene = () => {
     return (
