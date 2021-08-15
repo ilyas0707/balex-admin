@@ -31,7 +31,7 @@ export const Form = ({component, id, data, select, url, machines, size, clients,
             if (data.successful === false) {
                 errorMessage("Поля не должны быть пустыми!")
             } else {
-                successMessage(data.message)
+                successMessage(data.description)
             }
             history.push('/')
             if (component === 'createUser') {
@@ -71,7 +71,7 @@ export const Form = ({component, id, data, select, url, machines, size, clients,
                 setForm({ 
                     ...form, [e.target.name]: element.id === +e.target.value ? 
                     +e.target.value : e.target.name === 'pricePaid' ?
-                    +e.target.value : e.target.name === 'date' ? 
+                    +e.target.value : e.target.name === 'dateCreated' ? 
                     new Date(e.target.value).toISOString() : 
                     e.target.name === 'currency' ? e.target.value : 
                     e.target.name === 'paymentType' ? e.target.value : +e.target.value
@@ -85,7 +85,7 @@ export const Form = ({component, id, data, select, url, machines, size, clients,
                 size.filter(el => el.size === e.target.value)[0] : e.target.name === 'layer' ?
                 e.target.value : e.target.name === 'orderNumber' ?
                 e.target.value : e.target.name === 'pricePaid' ?
-                +e.target.value : e.target.name === 'date' ? 
+                +e.target.value : e.target.name === 'dateCreated' ? 
                 new Date(e.target.value).toISOString() : 
                 e.target.name === 'currency' ? e.target.value : 
                 e.target.name === 'paymentType' ? e.target.value : +e.target.value
@@ -99,7 +99,7 @@ export const Form = ({component, id, data, select, url, machines, size, clients,
                 +e.target.value : e.target.name === 'layer' ? 
                 e.target.value : e.target.name === 'dimension' ? 
                 e.target.value : e.target.name === 'square' ? 
-                +e.target.value : e.target.name === 'date' ? new Date(e.target.value).toISOString() : machines.filter(el => el.name === e.target.value)[0], volume: 0
+                +e.target.value : e.target.name === 'dateCreated' ? new Date(e.target.value).toISOString() : machines.filter(el => el.name === e.target.value)[0], volume: 0
             })
         }
         else if (id === 'outcome') {
@@ -109,7 +109,7 @@ export const Form = ({component, id, data, select, url, machines, size, clients,
                     ...form, [e.target.name]: e.target.value === element.name ? 
                     element : e.target.name === 'stoneVolume' ? 
                     +e.target.value : e.target.name === 'layer' ? 
-                    e.target.value : e.target.name === 'date' ? new Date(e.target.value).toISOString() : machines.filter(el => el.name === e.target.value)[0]
+                    e.target.value : e.target.name === 'dateCreated' ? new Date(e.target.value).toISOString() : machines.filter(el => el.name === e.target.value)[0]
                 })
             })
         } else {
@@ -120,7 +120,7 @@ export const Form = ({component, id, data, select, url, machines, size, clients,
                 e.target.name === 'pricePerSquare' ||
                 e.target.name === 'age' || 
                 e.target.name === 'value' ?
-                +e.target.value : e.target.name === 'date' ? new Date(e.target.value).toISOString() : e.target.value
+                +e.target.value : e.target.name === 'dateCreated' ? new Date(e.target.value).toISOString() : e.target.value
             })
         }
     }

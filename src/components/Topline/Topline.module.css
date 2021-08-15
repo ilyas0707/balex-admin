@@ -23,18 +23,18 @@
     font-weight: bold;
     display: flex;
     align-items: center;
-    color: #304269;
+    color: #40328A;
 }
 
 .icon {
     font-size: 40px;
-    color: #304269;
+    color: #40328A;
 }
 
 .account {
     font-size: 40px;
     margin-right: 5px;
-    color: #304269;
+    color: #40328A;
 }
 
 .message {
@@ -43,13 +43,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #F26101;
+    background: #40328A;
     padding: 70px 60px;
     text-align: center;
     border-radius: 10px;
     width: 400px;
     z-index: 11;
-    clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%);
+    /* clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%); */
 }
 
 .active {
@@ -65,11 +65,11 @@
 .submit {
     font-weight: bold;
     display: inline-block;
-    background: #D9E8F5;
+    background: #EF8C3B;
     border-radius: 5px;
     padding: 15px 30px;
     text-decoration: none;
-    color: #304269;
+    color: #fff;
     transition: .3s;
     margin-right: 10px;
 }
@@ -79,7 +79,7 @@
 }
 
 .submit:hover {
-    background: #D9E8F5;
+    background: #dd8237;
 }
 
 @media screen and (max-width: 500px) {

@@ -3,7 +3,8 @@
     width: 400px;
     background: #fff;
     padding: 80px 60px;
-    clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%);
+    border-radius: 10px;
+    /* clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%); */
 }
 
 .heading {
@@ -86,8 +87,8 @@
     font-size: 18px;
     text-decoration: none;
     padding: 15px 30px;
-    background: #D9E8F5;
-    color: #304269;
+    background: #EF8C3B;
+    color: #fff;
     border-radius: 6px;
 }
 
@@ -108,7 +109,7 @@
 .loading {
     display: inline-block;
     border: 10px solid #ccc;
-    border-top: 10px solid #F26101;
+    border-top: 10px solid #40328A;
     border-radius: 50%;
     width: 30px;
     height: 30px;

@@ -19,11 +19,9 @@ export const Dashboard = () => {
     }
 
     const links = [
-        { title: 'Приход камня', link: 'income', icon: 'move_to_inbox' },
-        { title: 'Приход камня(Бухгалтер)', link: 'incomeAccounting', icon: 'all_inbox' },
-        { title: 'Обработка камня', link: 'manufacturing', icon: 'construction' },
-        { title: 'Реализация камня', link: 'realization', icon: 'assignment_turned_in' },
-        { title: 'Отчёт', link: 'analytics', icon: 'assessment' },
+        { title: 'Клиенты', link: 'clients', icon: 'recent_actors' },
+        { title: 'Заказы', link: 'orders', icon: 'list_alt' },
+        { title: 'Приходы', link: 'income', icon: 'move_to_inbox' },
     ]
 
     const items = links.map(({title, link, icon}, i) => {

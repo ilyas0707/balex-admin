@@ -18,14 +18,8 @@
     font-size: 30px;
     margin-bottom: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-}
-
-.heading > a {
-    margin-left: 10px;
-    display: inline-flex;
-    align-items: flex-end;
 }
 
 .create {
@@ -34,7 +28,6 @@
 
 .wrapper {
     overflow-x: scroll;
-    margin-bottom: 30px;
 }
 
 .table {
@@ -42,13 +35,7 @@
     border-collapse: collapse;
 }
 
-.table > caption {
-    text-align: left;
-    font-size: 24px;
-    margin-bottom: 30px;
-}
-
-.table > caption > a {
+.heading > a {
     display: inline-flex;
     align-items: center;
     background: #D9E8F5;

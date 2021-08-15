@@ -14,22 +14,12 @@
     cursor: default;
 }
 
-
 .heading {
     font-size: 30px;
     margin-bottom: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-}
-
-.heading > a {
-    display: inline-flex;
-    align-items: center;
-    background: #D9E8F5;
-    padding: 10px 20px;
-    border-radius: 10px;
-    margin-left: 10px;
 }
 
 .create {
@@ -38,7 +28,6 @@
 
 .wrapper {
     overflow-x: scroll;
-    margin-bottom: 30px;
 }
 
 .table {
@@ -46,25 +35,18 @@
     border-collapse: collapse;
 }
 
-.table > caption {
-    text-align: left;
-    font-size: 24px;
-    margin-bottom: 30px;
+.heading > a {
+    display: inline-flex;
+    align-items: center;
+    background: #D9E8F5;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transform: translateY(5px);
+    margin-left: 10px;
 }
 
 .date {
     display: inline-block;
-}
-
-.warning {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.icon {
-    font-size: 100px;
-    color: #304269;
 }
 
 .deleteButton {

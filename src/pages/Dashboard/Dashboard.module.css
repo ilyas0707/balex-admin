@@ -13,7 +13,7 @@
 .loading {
     display: inline-block;
     border: 10px solid #ccc;
-    border-top: 10px solid #F26101;
+    border-top: 10px solid #40328A;
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -27,7 +27,7 @@
 
 .navbar {
     box-sizing: border-box;
-    background: #F26101;
+    background: #40328A;
     min-width: 350px;
     margin-left: -280px;
     height: 100vh;
@@ -57,7 +57,7 @@
     width: 70px;
     height: 70px;
     box-sizing: border-box;
-    background: #F26101;
+    background: #40328A;
     text-decoration: none;
     transition: .3s;
     text-align: center;
@@ -68,11 +68,11 @@
 }
 
 .ham:hover {
-    background: #304269;
+    background: #EF8C3B;
 }
 
 .ham:hover .line {
-    background: #F26101;
+    background: #40328A;
 }
 
 .menu {
@@ -99,7 +99,7 @@
 }
 
 .item > a:hover {
-    background: #ce5402;
+    background: #372b75;
 }
 
 .menu.open > .item > a {
@@ -107,7 +107,7 @@
 }
 
 .active {
-    background: #ce5402;
+    background: #372b75;
     font-weight: bold;
 }
 

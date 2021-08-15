@@ -1,38 +1,38 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 import { useGet } from '../../../hooks/get.hook'
 import { useDelete } from '../../../hooks/delete.hook'
-import { useIncome } from '../../../hooks/income.hook'
+import { useOrder } from '../../../hooks/order.hook'
 import { useSortByDate } from '../../../hooks/sortByDate.hook'
 import ReactPaginate from "react-paginate"
-import Styles from './Income.module.css'
+import Styles from './Order.module.css'
 import './Pagination.css'
 
 const PER_PAGE = 10
 
-export const Income = () => {
-    const { data, loading } = useGet('/api/income/getAll')
-    const { deleteHandler } = useDelete('income')
+export const Order = () => {
+    const { data, loading } = useGet('/api/order/getAll')
+    const { deleteHandler } = useDelete('orders')
     const { sortByDate } = useSortByDate()
-    const { incomeData } = useIncome(data.object)
+    const { orderData } = useOrder(data.object)
 
-    console.log(incomeData)
+    console.log(orderData)
 
-    const [incomeCurrentPage, setIncomeCurrentPage] = useState(0)
+    const [orderCurrentPage, setOrderCurrentPage] = useState(0)
 
 
-    function incomePageClick({ selected: selectedPage }) {
-        setIncomeCurrentPage(selectedPage)
+    function orderPageClick({ selected: selectedPage }) {
+        setOrderCurrentPage(selectedPage)
     }
 
-    const incomeOffset = incomeCurrentPage * PER_PAGE
-    const incomePageCount = Math.ceil(incomeData ? incomeData.length / PER_PAGE : 0)
+    const orderOffset = orderCurrentPage * PER_PAGE
+    const orderPageCount = Math.ceil(orderData ? orderData.length / PER_PAGE : 0)
 
     if (loading) {
         return (
             <>
                 <h3 className={Styles.heading}>
-                    Приходы
+                    Заказы
                 </h3>
                 <div className={Styles.loading}></div>
             </>
@@ -41,28 +41,31 @@ export const Income = () => {
     return (
         <div className={Styles.income}>
             <h3 className={Styles.heading}>
-                Приходы
-                <NavLink activeClassName={Styles.active} to={`/panel/income/create`}>
+                Заказы
+                {/* <NavLink activeClassName={Styles.active} to={`/panel/orders/create`}>
                     <i className={`material-icons ${Styles.create}`}>library_add</i>
-                </NavLink>
+                </NavLink> */}
             </h3>
             <div className={Styles.block}>
                 <div className={Styles.wrapper}>
                     <table cellPadding="10" border="0" bordercolor="#304269" className={Styles.table}>
                         <thead>
-                            <tr><th>Дата</th><th>Описание</th><th>Сумма</th><th>Метод оплаты</th><th>Клиент</th><th></th></tr>
+                            <tr><th>Дата</th><th>Описание</th><th>Гос. номер</th><th>Объём</th><th>Стоимость</th><th>Клиент</th><th>Итого</th><th></th></tr>
                         </thead>
                         <tbody>
                             {
-                                incomeData ?
-                                incomeData.sort(sortByDate).slice(incomeOffset, incomeOffset + PER_PAGE).map(({ id, description, amount, paymentMethod, client, date, sortDate }, i) => {
+                                orderData ?
+                                orderData.sort(sortByDate).slice(orderOffset, orderOffset + PER_PAGE).map(({ id, description, priceFromInvoice, total, trackNumber, volume, volumeUnit, user, date }, i) => {
                                     return (
                                         <tr key={ i }>
                                             <td width="1%">{ date }</td>
                                             <td>{ description }</td>
-                                            <td>{ amount }</td>
-                                            <td>{ paymentMethod }</td>
-                                            <td>{ `${client.name} ${client.surName}` }</td>
+                                            <td>{ trackNumber }</td>
+                                            <td>{ `${volume} ${volumeUnit}` }</td>
+                                            <td>{ priceFromInvoice }</td>
+                                            <td>Shaba</td>
+                                            {/* <td>{ `${user.name !== null ? user.name : ''} ${user.surName !== null ? user.surName : ''}` }</td> */}
+                                            <td>{ total }</td>
                                             <td width="1%">
                                                 <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/api/income/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
                                             </td>
@@ -76,8 +79,8 @@ export const Income = () => {
                 <ReactPaginate
                     previousLabel={"<"}
                     nextLabel={">"}
-                    pageCount={incomePageCount}
-                    onPageChange={incomePageClick}
+                    pageCount={orderPageCount}
+                    onPageChange={orderPageClick}
                     containerClassName={"pagination"}
                     previousLinkClassName={"pagination__link"}
                     nextLinkClassName={"pagination__link"}

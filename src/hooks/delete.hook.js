@@ -23,10 +23,10 @@ export const useDelete = (component) => {
         const pass = window.confirm("Вы уверенны?");
         if (pass) {
             try {
-                const data = await request(`${API_URL}${url}/${id}`, "DELETE", null, {
+                const data = await request(`${API_URL}${url}/${id}`, "POST", null, {
                     Authorization: `Basic ${code.hashed}`
                 })
-                successMessage(data.message)
+                successMessage(data.description)
                 history.push('/')
                 history.push(`panel/${component}`)
             } catch (e) {}

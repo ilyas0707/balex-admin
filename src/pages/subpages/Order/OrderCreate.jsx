@@ -1,10 +1,10 @@
 import React from 'react'
-import Styles from './IncomeCreate.module.css'
+import Styles from './OrderCreate.module.css'
 
-import { Form } from './../../../components/Form/Form'
+import { Form } from '../../../components/Form/Form'
 import { useAuth } from '../../../hooks/auth.hook'
 
-export const IncomeCreate = () => {
+export const OrderCreate = () => {
     const { profile } = useAuth()
 
     const Income = [

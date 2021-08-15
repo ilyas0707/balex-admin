@@ -32,7 +32,7 @@ export const useHttp = () => {
 
     const clearError = useCallback(() => setError(null), [])
 
-    const API_URL = `https://stone-init.herokuapp.com`
+    const API_URL = `https://shipper-back.herokuapp.com`
 
     return { loading, request, error, clearError, API_URL }
 }

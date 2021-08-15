@@ -37,7 +37,7 @@ export const Auth = () => {
                     let hashed = btoa(form.username + ':' + form.password)
                     localStorage.setItem('userCode', JSON.stringify({ hashed: hashed }))
                     
-                    const fetched = await request(`${API_URL}/api/login/myUser`, "GET", null, {
+                    const fetched = await request(`${API_URL}/api/users/login`, "GET", null, {
                         Authorization: `Basic ${hashed}`
                     })
 
