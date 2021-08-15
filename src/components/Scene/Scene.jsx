@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import { Profil } from '../../pages/Subpages/Profil/Profil'
+// import { Profil } from '../../pages/Subpages/Profil/Profil'
 import { Income } from './../../pages/Subpages/Income/Income'
 import { IncomeCreate } from './../../pages/Subpages/Income/IncomeCreate'
 import { Order } from './../../pages/Subpages/Order/Order'
@@ -14,9 +14,9 @@ export const Scene = () => {
     return (
         <div className={Styles.scene}>
             <Switch>
-                <Route path="/panel/profile" exact>
+                {/* <Route path="/panel/profile" exact>
                     <Profil />
-                </Route>
+                </Route> */}
                 <Route path="/panel/income" exact>
                     <Income />
                 </Route>
