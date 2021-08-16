@@ -67,7 +67,7 @@ export const Order = () => {
                                             {/* <td>{ `${user.name !== null ? user.name : ''} ${user.surName !== null ? user.surName : ''}` }</td> */}
                                             <td>{ total }</td>
                                             <td width="1%">
-                                                <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/api/income/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
+                                                <button className={Styles.deleteButton} type="submit" onClick={() => {deleteHandler('/api/order/delete', id)}}><i className={`material-icons ${Styles.delete}`}>delete</i></button>
                                             </td>
                                         </tr>
                                     )
