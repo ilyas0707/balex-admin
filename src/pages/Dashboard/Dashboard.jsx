@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import Styles from './Dashboard.module.css'
 
 import { NavLink } from 'react-router-dom'
-import { Topline } from '../../components/Topline/Topline'
-import { Scene } from '../../components/Scene/Scene'
+import { Topline } from './../../components/Topline/Topline'
+import { Scene } from './../../components/Scene/Scene'
 
 export const Dashboard = () => {
     const [open, setOpen] = useState(false)
