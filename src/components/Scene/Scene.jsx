@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import { Profile } from './../../pages/Subpages/Profile/Profile.jsx'
+import { Profile } from './../../pages/Subpages/Profile/Profile'
 import { Income } from './../../pages/Subpages/Income/Income'
 import { IncomeCreate } from './../../pages/Subpages/Income/IncomeCreate'
 import { Order } from './../../pages/Subpages/Order/Order'
