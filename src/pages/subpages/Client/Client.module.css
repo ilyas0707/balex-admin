@@ -1,0 +1,66 @@
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+
+.button {
+    background: #304269;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.card {
+    display: inline-block;
+    padding: 40px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 10px 0px #ccc;
+    border-radius: 10px;
+}
+
+.item {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.item:first-child {
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.item:last-child {
+    margin-bottom: 0;
+}
+
+.icon {
+    margin-right: 10px;
+    color: #40328A;
+}
+
+/* .delete {
+    font-size: 20px;
+} */
+
+.data {
+    margin-top: 30px;
+}
+
+.data > ul > li {
+    font-size: 18px;
+}
+
+/* @media screen and (max-width: 430px) {
+    .tabs {
+        flex-wrap: wrap;
+    }
+    .tab {
+        width: 100%;
+    }
+} */

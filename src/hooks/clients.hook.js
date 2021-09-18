@@ -16,7 +16,7 @@ export const useClients = (clients) => {
             activityStatus: activityStatus,
             balance: balance
         }
-    }) : ''
+    }) : []
 
     return { clientsData }
 }

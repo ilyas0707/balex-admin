@@ -2,7 +2,8 @@
 
 * {
 	font-family: 'Rubik', sans-serif;
-    user-select: none;
+    /* box-sizing: border-box; */
+    /* user-select: none; */
     outline: none;
 }
 

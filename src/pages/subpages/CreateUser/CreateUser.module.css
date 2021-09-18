@@ -1,0 +1,17 @@
+.create {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.heading {
+    font-size: 25px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 640px) {
+    .create {
+        width: 100%;
+    }
+}

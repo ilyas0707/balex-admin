@@ -1,6 +1,6 @@
 export const useOrder = (order) => {
 
-    const orderData = order ? order.map(({ id, description, priceFromInvoice, total, trackNumber, volume, volumeUnit, user, dateTime }) => {
+    const orderData = order ? order.map(({ id, description, priceFromInvoice, total, trackNumber, volume, volumeUnit, user, dateTime, status }) => {
         let dateFormatted = new Date(dateTime)
         return {
             id: id,
@@ -11,6 +11,7 @@ export const useOrder = (order) => {
             priceFromInvoice: priceFromInvoice,
             total: total,
             user: user,
+            status: status,
             date: `${dateFormatted.getDate()}/${dateFormatted.getMonth() + 1}/${dateFormatted.getFullYear()}`,
             sortDate: dateFormatted
         }

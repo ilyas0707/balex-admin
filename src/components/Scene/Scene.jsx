@@ -9,6 +9,7 @@ import { OrderCreate } from '../../pages/subpages/Order/OrderCreate'
 
 import Styles from './Scene.module.css'
 import { Clients } from './../../pages/subpages/Clients/Clients'
+import { ClientFragment } from '../../fragments/ClientFragment'
 
 export const Scene = () => {
     return (
@@ -31,6 +32,9 @@ export const Scene = () => {
                 </Route>
                 <Route path="/panel/clients" exact>
                     <Clients />
+                </Route>
+                <Route path="/panel/clients/:id" exact>
+                    <ClientFragment />
                 </Route>
             </Switch>
         </div>
